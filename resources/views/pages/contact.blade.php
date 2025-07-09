@@ -33,7 +33,7 @@
                         <h5 class="contact_title mb-2">Phone</h5>
                         <ul class="contact_info">
                             <li>
-                                <a href="Tel:+393246822222">+88 01234567895</a>
+                                <a href="Tel:{{getSiteSettings()->phone}}">{{getSiteSettings()->phone}}</a>
                             </li>
                         </ul>
                     </div>
@@ -48,7 +48,7 @@
                         <h5 class="contact_title mb-2">Email</h5>
                         <ul class="contact_info">
                             <li>
-                                <a href="mailto:kkkk@gmail.com">kkkk@gmail.com</a>
+                                <a href="mailto:{{getSiteSettings()->email}}">{{getSiteSettings()->email}}</a>
                             </li>
                         </ul>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="contact_body">
                         <h5 class="contact_title mb-2">Address</h5>
                         <ul class="contact_info">
-                            <li>Dhaka, Bangladesh</li>
+                            <li>{{getSiteSettings()->address}}</li>
                         </ul>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="ratio ratio-16x9">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d5940.228495781114!2d12.51036!3d41.8904!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDUzJzI1LjQiTiAxMsKwMzAnMzcuMyJF!5e0!3m2!1sen!2sus!4v1719637526343!5m2!1sen!2sus" style="border:0; width:100%;" class="rounded" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="{{getSiteSettings()->map_url}}" style="border:0; width:100%;" class="rounded" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
