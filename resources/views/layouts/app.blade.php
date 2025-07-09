@@ -11,17 +11,17 @@
     <meta name="googlebot" content="index,follow">
     <meta name="author" content="rony">
     <meta name="csrf-token" content="">
-    <meta property="og:image" content="{{asset('assets/images/favicon.png')}}">
+    <meta property="og:image" content="{{asset('assets/images/'.getSiteSettings()->fav_icon)}}">
     <meta property="og:site_name" content="Blog">
     <meta property="og:title" content="top business news - Blog">
     <meta property="og:url" content="https://blog.com">
     <meta property="og:type" content="article">
     <meta name="description"
-        content="top business news blog.">
+        content="@yield('description')">
     <meta name="keywords"
-        content="blog, business">
+        content="@yield('keywords')">
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{asset('assets/images/favicon.png')}}">
+    <link rel="icon" type="image/png" href="{{asset('assets/images/'.getSiteSettings()->fav_icon)}}">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <!-- Css -->

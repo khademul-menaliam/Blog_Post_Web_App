@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Contact')
+@section('title', getSiteSettings()->content_meta_title)
+@section('description', getSiteSettings()->content_meta_description)
+@section('keywords', getSiteSettings()->content_meta_keywords)
 
 
 @section('content')
@@ -71,7 +73,13 @@
         <div class="row gy-5">
             <div class="col-xl-6">
                 <div class="contact_form">
-                    <form class="row" action="#" method="post">
+                        @if(session('success'))
+                            <div class="alert alert-success mt-2 mb-2">
+                            {{ session('success') }}
+                            </div>
+                        @endif
+                    <form class="row" action="{{route('savecontact')}}" method="post">
+                        @csrf
                         <div class="col-md-6 mb-3">
                             <label for="name" class="form-label form--label">Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" placeholder="Your Name" class="form-control shadow-none" required="">
@@ -83,7 +91,7 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="subject" class="form-label form--label">Subject <span class="text-danger">*</span></label>
-                            <input type="text" name="subject" id="subject" placeholder="Write your subject" class="form-control shadow-none"
+                            <input type="text" name="subjects" id="subject" placeholder="Write your subject" class="form-control shadow-none"
                                 required="">
                         </div>
                         <div class="col-md-12 mb-3">
@@ -95,6 +103,15 @@
                             <button type="submit" class="btn btn-primary btn-sm px-5 text-uppercase">Submit</button>
                         </div>
                     </form>
+                @if($errors->any())
+                <div class="alert alert-danger mt-2 mb-2">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 </div>
             </div>
             <div class="col-xl-6">

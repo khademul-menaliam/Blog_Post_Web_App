@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Privacy Policy')
+@section('title', $content->meta_title)
+@section('description', $content->meta_description)
+@section('keywords', $content->meta_keywords)
 
 @section('content')
     <!-- ======================= breadcrumb Start  ============================ -->
