@@ -35,8 +35,7 @@
                                 <div class="col-md-6">
                                     <div class="blog_post p-3 p-lg-4 card h-100 bg-transparent shadow-sm border-opacity-10">
                                         <div class="blog_img mb-4 position-relative">
-                                            <a href="">
-                                                {{-- {{ route(name: 'posts.show', $post->slug) }} --}}
+                                            <a href="{{ route('blog.show', $post->slug) }}">
                                                 <img class="img-fluid rounded z-3" src="{{ asset('assets/images/blog/' . $post->img) }}"
                                                     alt="{{ $post->title }}">
                                             </a>

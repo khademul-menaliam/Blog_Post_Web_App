@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand-lg p-0">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{url('/')}}">
-                    <img src="{{asset('assets/images/logo2.png')}}" class="img-fluid" alt="Blog">
+                    <img src="{{asset('assets/images/'.getSiteSettings()->logo)}}" class="img-fluid" alt="Blog">
                 </a>
                 <div class="d-flex align-items-center d-block d-lg-none">
                     <div class="me-2">
@@ -17,17 +17,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{url('/')}}">Home</a>
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('blogs.index')}}">Blog</a>
+                            <a class="nav-link {{ request()->routeIs('blogs.index') ? 'active' : '' }}" href="{{ route('blogs.index') }}">Blog</a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{route('contact.index')}}">Contact</a>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('contact.index') ? 'active' : '' }}" href="{{ route('contact.index') }}">Contact</a>
                         </li>
+
                         <li class="nav-item me-3">
-                            <a class="nav-link" href="{{ route('help') }}">Helpline</a>
+                            <a class="nav-link {{ request()->routeIs('help') ? 'active' : '' }}" href="{{ route('help') }}">Helpline</a>
                         </li>
+
                         <li class="nav-item">
                             <!-- Search Form -->
                             <form class="d-flex" action="/search" method="GET">

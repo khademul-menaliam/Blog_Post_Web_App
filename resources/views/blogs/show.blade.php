@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Blog')
-
+@section('title', $blog->meta_title)
+@section('description', $blog->meta_description)
+@section('keywords', $blog->meta_keywords)
 
 @section('content')
 
@@ -143,7 +144,7 @@
                 {{-- releted post --}}
                 <div class="blog_post p-3 p-lg-4 card h-100 bg-transparent shadow-sm border-opacity-10">
                     <div class="blog_img mb-4 position-relative">
-                        <a href="details.html">
+                        <a href="{{ route('blog.show', $post->slug) }}">
                             <img class="img-fluid rounded z-3" src="{{ asset('assets/images/blog/' . $post->img) }}"
                                 alt="{{ $post->title }}">
                         </a>

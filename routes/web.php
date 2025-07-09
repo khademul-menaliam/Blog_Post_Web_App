@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TermsController;
+use App\Http\Controllers\SubscriberController;
 
 
 
@@ -31,6 +32,10 @@ Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy.index
 Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
 
 
+// Route::post('/subscribe', [SubscriberController::class, 'store'])->name('newsletter.subscribe');
+Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('newsletter.subscribe');
+// Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/savecontact', [ContactController::class, 'store'])->name('savecontact');
 
 // Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create'); // Show create form
 // Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');         // Store new blog
