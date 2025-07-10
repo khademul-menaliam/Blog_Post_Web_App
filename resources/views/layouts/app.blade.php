@@ -17,9 +17,13 @@
     <meta property="og:url" content="https://blog.com">
     <meta property="og:type" content="article">
     <meta name="description"
+
         content="@yield('description')">
+
     <meta name="keywords"
+
         content="@yield('keywords')">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{asset('assets/images/'.getSiteSettings()->fav_icon)}}">
     <!-- Fonts -->
