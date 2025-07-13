@@ -16,6 +16,7 @@ protected $table = 'posts';
         'slug',
         'description',
         'category_id',
+        'user_id',
         'views',
         'meta_title',
         'meta_description',
