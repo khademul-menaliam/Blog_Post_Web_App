@@ -16,3 +16,4 @@ node_modules
 .env.sandbox.local
 .env.qa
 .env.
+.env
