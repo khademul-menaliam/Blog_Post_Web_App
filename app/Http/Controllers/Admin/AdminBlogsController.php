@@ -39,6 +39,13 @@ class AdminBlogsController extends Controller
         $users = User::all();
         return view('admin.blogs.create', compact('categores', 'users'));
     }
+        public function edit($id)
+    {
+        $post = Blog::findOrFail($id);
+        $categores = Category::all();
+        $users = User::all();
+        return view('admin.blogs.edit', compact('post', 'categores', 'users'));
+    }
 
 
             public function show($id)
@@ -52,7 +59,7 @@ class AdminBlogsController extends Controller
     public function store(Request $request)
     {
         try {
-            // Validate the request
+            // Validation (let Laravel handle errors)
             $request->validate([
                 'postTitle' => 'required|string|max:255',
                 'postSlug' => 'required|string|max:255',
@@ -113,14 +120,81 @@ class AdminBlogsController extends Controller
             return redirect()->route('admin.blogs.index')
                 ->with('success', 'Blog post created successfully!');
 
-        } catch (\Exception $e) {
+        }
+
+        catch (\Exception $e) {
             // Log the error for debugging
-            Log::error('Blog creation error: ' . $e->getMessage());
+            // Log::error('Blog creation error: ' . $e->getMessage());
 
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'Failed to create blog post. Please try again.');
+                ->with([
+                    'error' => 'Failed to create blog post. Please try again.',
+                    'error_detail' => $e->getMessage()
+                ]);
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $post = Blog::findOrFail($id);
+        $request->validate([
+            'postTitle' => 'required|string|max:255',
+            'postCategory' => 'required|exists:categories,id',
+            'Author' => 'required|exists:users,id',
+            'description' => 'required|string',
+            'postDate' => 'required|date',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'metaTitle' => 'nullable|string|max:60',
+            'metaDescription' => 'nullable|string|max:160',
+            'keywords' => 'nullable|array',
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('img')) {
+            // Delete old image if exists
+            if ($post->img && file_exists(public_path('assets/images/blog/' . $post->img))) {
+                unlink(public_path('assets/images/blog/' . $post->img));
+            }
+            $image = $request->file('img');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('assets/images/blog');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $post->img = $imageName;
+        }
+
+        $metaKeywords = null;
+        if ($request->has('keywords')) {
+            $metaKeywords = implode(', ', $request->keywords);
+        }
+
+        $post->title = $request->postTitle;
+        $post->description = $request->description;
+        $post->category_id = $request->postCategory;
+        $post->user_id = $request->Author;
+        $post->meta_title = $request->metaTitle;
+        $post->meta_description = $request->metaDescription;
+        $post->meta_keywords = $metaKeywords;
+        $post->created_at = $request->postDate;
+        $post->updated_at = now();
+        $post->save();
+
+        return redirect()->route('admin.blogs.index')
+            ->with('success', 'Blog post updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $post = Blog::findOrFail($id);
+        // Delete image if exists
+        if ($post->img && file_exists(public_path('assets/images/blog/' . $post->img))) {
+            unlink(public_path('assets/images/blog/' . $post->img));
+        }
+        $post->delete();
+        return redirect()->route('admin.blogs.index')
+            ->with('success', 'Blog post deleted successfully!');
+    }
 }

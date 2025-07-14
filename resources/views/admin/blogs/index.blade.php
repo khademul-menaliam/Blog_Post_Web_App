@@ -32,6 +32,12 @@
                             <h3 class="card-title">Posts</h3>
                             <a class="float-right" href="{{route('admin.blog.create')}}">Add Post +</a>
                         </div>
+                                                        @if(session('success'))
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="postlist" class="table table-bordered table-striped">
@@ -58,8 +64,14 @@
                             <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
                             <td>
                                 <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
-                                <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+
+
+                                <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
 
