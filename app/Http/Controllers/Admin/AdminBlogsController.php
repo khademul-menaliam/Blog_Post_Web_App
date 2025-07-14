@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\file;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -54,15 +55,15 @@ class AdminBlogsController extends Controller
             // Validate the request
             $request->validate([
                 'postTitle' => 'required|string|max:255',
-                'postSlug' => 'required|string|max:255|unique:posts,slug',
+                'postSlug' => 'required|string|max:255',
                 'postCategory' => 'required|exists:categories,id',
                 'Author' => 'required|exists:users,id',
                 'description' => 'required|string',
                 'postDate' => 'required|date',
                 'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'metaTitle' => 'nullable|string|max:255',
-                'metaDescription' => 'nullable|string',
-                'keywords' => 'nullable|string|max:255',
+                'metaTitle' => 'nullable|string|max:60',
+                'metaDescription' => 'nullable|string|max:160',
+                'keywords' => 'nullable|array',
             ]);
 
             // Handle file upload
@@ -80,17 +81,31 @@ class AdminBlogsController extends Controller
                 $imagePath = $imageName;
             }
 
+            // Ensure unique slug
+            $originalSlug = $request->postSlug;
+            $slug = $originalSlug;
+            if (Blog::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . uniqid();
+            }
+
+
+            $metaKeywords = null;
+            if ($request->has('keywords')) {
+                $metaKeywords = implode(', ', $request->keywords);
+            }
+
+
             // Create the blog post
             $blog = Blog::create([
                 'title' => $request->postTitle,
-                'slug' => $request->postSlug,
+                'slug' => $slug,
                 'description' => $request->description,
                 'category_id' => $request->postCategory,
                 'user_id' => $request->Author,
                 'img' => $imagePath,
                 'meta_title' => $request->metaTitle,
                 'meta_description' => $request->metaDescription,
-                'meta_keywords' => $request->keywords,
+                'meta_keywords' => $metaKeywords,
                 'created_at' => $request->postDate,
                 'updated_at' => now(),
             ]);

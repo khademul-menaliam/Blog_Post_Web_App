@@ -33,6 +33,8 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/blogs/category/{slug}', [BlogController::class, 'category'])->name('blogs.category');
+Route::get('/search', [BlogController::class, 'search'])->name('search');
+
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/help', [HelpController::class, 'index'])->name('help');

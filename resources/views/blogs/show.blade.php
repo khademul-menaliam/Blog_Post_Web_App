@@ -179,7 +179,7 @@
                         <h3 class="mb-3">
                             <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
                         </h3>
-                        <div class="blog_desc mb-2">{{ Str::limit(strip_tags($post->description), 150) }}
+                        <div class="blog_desc mb-2">{!! Str::limit(strip_tags($post->description), 150) !!}
                         </div>
                     </div>
                     <hr>

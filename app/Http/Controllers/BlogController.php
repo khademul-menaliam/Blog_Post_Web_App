@@ -8,11 +8,25 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::paginate(4);
         $category = Category::all();
         $latestPost = Blog::latest()->limit(6)->get();
         return view('blogs.index', compact('blogs', 'category', 'latestPost'));
     }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $blogs = Blog::where('title', 'like', "%{$query}%")
+                     ->orWhere('description', 'like', "%{$query}%")
+                     ->paginate(4);
+
+        $blogs->appends(['query' => $query]);
+        $category = Category::all();
+        $latestPost = Blog::latest()->limit(4)->get();
+        return view('blogs.search', compact('blogs', 'category', 'latestPost'));
+    }
+
+
         public function show($slug)
     {
         $blog = Blog::where('slug' , $slug)-> firstOrFail();

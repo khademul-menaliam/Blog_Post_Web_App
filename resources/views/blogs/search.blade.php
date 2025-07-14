@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Posts by Category')
+@section('title', 'Posts by Search')
 
 
 @section('content')
@@ -94,6 +94,10 @@
                                 </div>
                             </div>
                         @endif
+                                        <!-- pagination -->
+                <div class="pagination mt-5 mb-2 d-flex justify-content-center">
+                    {{$blogs->links('pagination::bootstrap-5')}}
+                 </div>
 
 
                     </div>

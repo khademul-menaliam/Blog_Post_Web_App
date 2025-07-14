@@ -1,8 +1,12 @@
 @extends('admin.layouts.app')
 
-    {{-- @include('admin.layouts.partials.sidebar') --}}
-    @section('title', 'Post List')
+{{-- @include('admin.layouts.partials.sidebar') --}}
+@section('title', 'Post Create')
+@push('css')
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+@endpush
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -62,14 +66,14 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="postTitle">Post Title</label>
+                                    <label for="postTitle">Post Title <span class="text-danger">*</span> </label>
                                     <input type="text" class="form-control @error('postTitle') is-invalid @enderror" id="postTitle" name="postTitle" placeholder="Enter post title" value="{{ old('postTitle') }}">
                                     @error('postTitle')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="postTitle">Post Slug</label>
+                                    <label for="postTitle">Post Slug <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('postSlug') is-invalid @enderror" id="postSlug" name="postSlug" placeholder="Enter post Slug" value="{{ old('postSlug') }}">
                                     @error('postSlug')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -77,7 +81,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="postCategory">Category</label>
+                                    <label for="postCategory">Category <span class="text-danger">*</span></label>
                                     <select class="form-control @error('postCategory') is-invalid @enderror" id="postCategory" name="postCategory">
                                         <option value="">Select Category</option>
                                         @foreach($categores as $category)
@@ -89,7 +93,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="postAuthor">Author</label>
+                                    <label for="postAuthor">Author <span class="text-danger">*</span></label>
 
                                     <select class="form-control @error('Author') is-invalid @enderror" id="Author" name="Author">
                                         <option value="">Select Author</option>
@@ -103,14 +107,14 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="desc">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="5" placeholder="Enter post desc">{{ old('description') }}</textarea>
+                                    <label for="desc">Description <span class="text-danger">*</span></label>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Enter post desc">{{ old('description') }}</textarea>
                                     @error('description')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="postDate">Date</label>
+                                    <label for="postDate">Date <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control @error('postDate') is-invalid @enderror" id="postDate" name="postDate" value="{{ old('postDate') }}">
                                     @error('postDate')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -130,26 +134,34 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="metaTitle">Meta Title</label>
-                                    <input type="text" class="form-control @error('metaTitle') is-invalid @enderror" id="metaTitle" name="metaTitle" placeholder="Enter meta title" value="{{ old('metaTitle') }}">
+                                    <input type="text" class="form-control @error('metaTitle') is-invalid @enderror" id="metaTitle" name="metaTitle" placeholder="Enter meta title (Maximum 60 charecter)" value="{{ old('metaTitle') }}">
                                     @error('metaTitle')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="metaDescription">Meta Description</label>
-                                    <textarea class="form-control @error('metaDescription') is-invalid @enderror" id="metaDescription" name="metaDescription" rows="8" placeholder="Enter meta description">{{ old('metaDescription') }}</textarea>
+                                    <textarea class="form-control @error('metaDescription') is-invalid @enderror" id="metaDescription" name="metaDescription" rows="4" placeholder="Enter meta description (Maximum 160 charecter)">{{ old('metaDescription') }}</textarea>
                                     @error('metaDescription')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="postTags">Keywords</label>
-                                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="keywords" name="keywords" placeholder="Enter Keywords separated by commas" value="{{ old('keywords') }}">
+                                    <select class="form-control " id="keywords" name="keywords[]" multiple="multiple" >
+                                        @if(old('keywords'))
+                                            @foreach(explode(',', old('keywords')) as $keyword)
+                                             <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
+                                            @endforeach
+                                        @endif
+
+                                    </select>
                                     @error('keywords')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+
                             <!-- /.card-body -->
 
                             <div class="card-footer">
@@ -216,5 +228,43 @@
             console.error(error);
         });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function generateSlug(text) {
+        return text
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, '')     // Remove invalid chars
+            .replace(/\s+/g, '-')             // Replace whitespace with -
+            .replace(/-+/g, '-');             // Collapse multiple -
+    }
+
+    $(document).ready(function() {
+        $('#postTitle').on('keyup change', function() {
+            let title = $(this).val();
+            let slug = generateSlug(title);
+            $('#postSlug').val(slug);
+        });
+    });
+</script>
+<!-- jQuery (required) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Initialize Select2 -->
+<script>
+    $(document).ready(function() {
+        $('#keywords').select2({
+            tags: true,
+            tokenSeparators: [','],
+            placeholder: "Enter keywords...",
+            width: '100%'
+        });
+    });
+</script>
+
+
 
 @endpush

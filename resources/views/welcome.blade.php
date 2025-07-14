@@ -63,7 +63,7 @@
 
                                         </h3>
                                         <div class="blog_desc mb-2">
-                                            {{ Str::limit(strip_tags($post->description), 150) }}
+                                            {!! Str::limit(strip_tags($post->description), 150) !!}
                                         </div>
                                     </div>
                                     <hr>

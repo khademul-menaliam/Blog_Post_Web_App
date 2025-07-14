@@ -34,7 +34,7 @@
 
                         <li class="nav-item">
                             <!-- Search Form -->
-                            <form class="d-flex" action="/search" method="GET">
+                            <form class="d-flex" action="{{route('search')}}" method="GET">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
                                 <button class="btn btn-outline-success" type="submit">Search</button>
                             </form>

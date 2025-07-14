@@ -53,7 +53,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$post->title}}</td>
                             <td>{{$post->category->title}}</td>
-                            <td>{{ Str::limit($post->description, 100)}}</td>
+                            <td>{!! Str::limit($post->description, 80)!!}</td>
                             <td><img src="{{asset('assets/images/blog/'.$post->img)}}" width="50" height="50" alt="img"></td>
                             <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
                             <td>
