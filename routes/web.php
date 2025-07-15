@@ -52,13 +52,12 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/admin/blogs', [AdminBlogsController::class, 'index'])->name('admin.blogs.index');
+
 Route::get('/admin/blog/create', [AdminBlogsController::class, 'create'])->name('admin.blog.create');
 Route::post('/admin/blog/store', [AdminBlogsController::class, 'store'])->name('admin.blog.store');
 Route::get('/admin/blogs/show/{id}', [AdminBlogsController::class, 'show'])->name('admin.blogs.show');
-
 Route::get('/admin/blogs/edit/{id}', [AdminBlogsController::class, 'edit'])->name('admin.blogs.edit');
 Route::put('/admin/blogs/update/{id}', [AdminBlogsController::class, 'update'])->name('admin.blogs.update');
-
 Route::delete('/admin/blogs/delete/{id}', [AdminBlogsController::class, 'destroy'])->name('admin.blogs.destroy');
 
 
@@ -66,6 +65,15 @@ Route::delete('/admin/blogs/delete/{id}', [AdminBlogsController::class, 'destroy
 
 Route::get('/admin/category', [AdminCategoryController::class, 'index'])->name('admin.category.index');
 Route::get('/admin/category/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
+Route::post('/admin/category/store', [AdminCategoryController::class, 'store'])->name('admin.category.store');
+Route::get('/admin/category/show/{id}', [AdminCategoryController::class, 'show'])->name('admin.category.show');
+Route::get('/admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin.category.edit');
+Route::put('/admin/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin.category.update');
+Route::delete('/admin/category/delete/{id}', [AdminCategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+
+
+
 
 Route::get('/admin/privacy', [AdminPrivacyController::class, 'index'])->name('admin.pages.privacy');
 Route::get('/admin/terms', [AdminTermsController::class, 'index'])->name('admin.pages.terms');

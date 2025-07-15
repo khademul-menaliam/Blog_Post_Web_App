@@ -32,7 +32,7 @@
                             <h3 class="card-title">Posts</h3>
                             <a class="float-right" href="{{route('admin.blog.create')}}">Add Post +</a>
                         </div>
-                                                        @if(session('success'))
+                                @if(session('success'))
                                     <div class="alert alert-success alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         {{ session('success') }}

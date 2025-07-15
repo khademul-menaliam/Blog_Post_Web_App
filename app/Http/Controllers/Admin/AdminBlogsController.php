@@ -32,28 +32,18 @@ class AdminBlogsController extends Controller
         return view('admin.blogs.index', compact('blogs', 'category', 'latestPost'));
 
     }
+    public function show($id)
+    {
 
-        public function create()
+        $post = Blog::find( $id);
+        return view('admin.blogs.show', compact('post'));
+    }
+
+    public function create()
     {
         $categores = Category::all();
         $users = User::all();
         return view('admin.blogs.create', compact('categores', 'users'));
-    }
-        public function edit($id)
-    {
-        $post = Blog::findOrFail($id);
-        $categores = Category::all();
-        $users = User::all();
-        return view('admin.blogs.edit', compact('post', 'categores', 'users'));
-    }
-
-
-            public function show($id)
-    {
-
-        $post = Blog::find( $id);
-
-        return view('admin.blogs.show', compact('post'));
     }
 
     public function store(Request $request)
@@ -133,6 +123,13 @@ class AdminBlogsController extends Controller
                     'error_detail' => $e->getMessage()
                 ]);
         }
+    }
+    public function edit($id)
+    {
+        $post = Blog::findOrFail($id);
+        $categores = Category::all();
+        $users = User::all();
+        return view('admin.blogs.edit', compact('post', 'categores', 'users'));
     }
 
     public function update(Request $request, $id)
