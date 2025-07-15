@@ -76,8 +76,12 @@ Route::delete('/admin/category/delete/{id}', [AdminCategoryController::class, 'd
 
 
 Route::get('/admin/privacy', [AdminPrivacyController::class, 'index'])->name('admin.pages.privacy');
+Route::put('/admin/privacy/update/{id}', [AdminPrivacyController::class, 'update'])->name('admin.privacy.update');
+
 Route::get('/admin/terms', [AdminTermsController::class, 'index'])->name('admin.pages.terms');
+Route::put('/admin/terms/update/{id}', [AdminTermsController::class, 'update'])->name('admin.terms.update');
+
+
 
 Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
-
 Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');

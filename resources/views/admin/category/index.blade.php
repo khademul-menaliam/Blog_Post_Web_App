@@ -32,7 +32,7 @@
                         <h3 class="card-title">Category</h3>
                         <a class="float-right" href="{{route('admin.category.create')}}">Create New + </a>
                     </div>
-                                                    @if(session('success'))
+                                @if(session('success'))
                                     <div class="alert alert-success alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                         {{ session('success') }}
