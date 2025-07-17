@@ -84,4 +84,5 @@ Route::put('/admin/terms/update/{id}', [AdminTermsController::class, 'update'])-
 
 
 Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
+Route::post('/admin/settings/update', [AdminSettingsController::class, 'update'])->name('admin.settings.update');
 Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
