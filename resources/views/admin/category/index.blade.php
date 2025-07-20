@@ -45,6 +45,7 @@
                                 <tr>
                                     <th>SL.</th>
                                     <th>Category Name</th>
+                                    <th>Author</th>
                                     <th>Slug</th>
                                     <th>Date</th>
                                     <th>Actions</th>
@@ -57,6 +58,7 @@
                             <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$category->title}}</td>
+                                    <td>{{$category->user->name ?? 'N/A' }}</td>
                                     <td>{{$category->slug}}</td>
                                     <td>{{$category->created_at->format('d/ m/ Y')}}</td>
                                 <td>
@@ -80,6 +82,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Category Name</th>
+                                    <th>Author</th>
                                     <th>Slug</th>
                                     <th>Date</th>
                                     <th>Actions</th>

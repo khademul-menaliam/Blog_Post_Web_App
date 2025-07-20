@@ -21,6 +21,7 @@ protected $table = 'posts';
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'status',
     ];
 
     /**

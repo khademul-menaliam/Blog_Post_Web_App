@@ -11,9 +11,9 @@ class WelcomeController extends Controller
     public function index()
     {
 
-        $blogs = Blog::latest()->limit(4)->get();
+        $blogs = Blog::where('status',1)->latest()->limit(4)->get();
         $category = Category::all();
-        $latestPost = Blog::latest()->get();
+        $latestPost = Blog::where('status',1)->latest()->get();
 
 
         return view('welcome', compact('blogs', 'category','latestPost' ));

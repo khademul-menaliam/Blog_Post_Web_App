@@ -10,7 +10,7 @@ class ContactController extends Controller
     // Display a listing of the blogs
     public function index()
     {
-        $latestPost = Blog::latest()->limit(6)->get();
+        $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         $categories = Category::all();
         return view('pages.contact', compact('latestPost', 'categories'));
 

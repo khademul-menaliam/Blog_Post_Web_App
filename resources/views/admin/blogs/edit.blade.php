@@ -165,6 +165,15 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label for="status">Select Status <span class="text-danger">*</span></label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                                        <option value="0" {{$post->status == 0 ? 'selected': ''}}>Draft</option>
+                                       <option value="1" {{$post->status == 1 ? 'selected': ''}}>Published</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- /.card-body -->

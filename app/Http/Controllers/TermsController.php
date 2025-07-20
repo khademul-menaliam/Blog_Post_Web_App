@@ -9,7 +9,7 @@ class TermsController extends Controller
 {
     public function index()
     {
-         $latestPost = Blog::latest()->limit(6)->get();
+         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         $content = DB::table('terms')->first();
         return view('pages.terms', compact('content','latestPost'));
     }

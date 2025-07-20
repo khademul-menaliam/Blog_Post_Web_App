@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Blog;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $categories = Category::latest()->take(5)->get();
+        $blogs = Blog::latest()->take(5)->get();
+        $totalcategories = Category::count();
+        $totalblogs = Blog::count();
+        $totaldraftblogs = Blog::where('status',0)->count();
+        $totalpublishedblogs = Blog::where('status',1)->count();
+        return view('admin.home', compact('categories','blogs', 'totalcategories','totalblogs','totaldraftblogs','totalpublishedblogs'));
     }
+
 }

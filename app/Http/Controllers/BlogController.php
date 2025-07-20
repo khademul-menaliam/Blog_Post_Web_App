@@ -8,31 +8,31 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::paginate(4);
+        $blogs = Blog::where('status',1)->paginate(4);
         $category = Category::all();
-        $latestPost = Blog::latest()->limit(6)->get();
+        $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         return view('blogs.index', compact('blogs', 'category', 'latestPost'));
     }
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $blogs = Blog::where('title', 'like', "%{$query}%")
+        $blogs = Blog::where('status',1)->where('title', 'like', "%{$query}%")
                      ->orWhere('description', 'like', "%{$query}%")
                      ->paginate(4);
 
         $blogs->appends(['query' => $query]);
         $category = Category::all();
-        $latestPost = Blog::latest()->limit(4)->get();
+        $latestPost = Blog::where('status',1)->latest()->limit(4)->get();
         return view('blogs.search', compact('blogs', 'category', 'latestPost'));
     }
 
 
         public function show($slug)
     {
-        $blog = Blog::where('slug' , $slug)-> firstOrFail();
+        $blog = Blog::where('status',1)->where('slug' , $slug)-> firstOrFail();
         $category = Category::all();
-        $latestPost = Blog::latest()->limit(4)->get();
-        $relatedPost = Blog::where('category_id', $blog->category_id)
+        $latestPost = Blog::where('status',1)->latest()->limit(4)->get();
+        $relatedPost = Blog::where('status',1)->where('category_id', $blog->category_id)
           ->where('id', '!=', $blog->id)->limit(2)->get();
          //dd($relatedPost);
 
@@ -43,8 +43,8 @@ class BlogController extends Controller
     {
         $category = Category::all();
         $currentCategory = Category::where('slug', $slug)->firstOrFail();
-        $blogs = Blog::where('category_id', $currentCategory->id)->latest()->get();
-        $latestPost = Blog::latest()->limit(6)->get();
+        $blogs = Blog::where('status',1)->where('category_id', $currentCategory->id)->latest()->get();
+        $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         return view('blogs.category', compact('blogs', 'category', 'currentCategory', 'latestPost'));
     }
     // Show the form for creating a new blog

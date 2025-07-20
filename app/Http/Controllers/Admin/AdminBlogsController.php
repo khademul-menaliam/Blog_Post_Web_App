@@ -61,6 +61,8 @@ class AdminBlogsController extends Controller
                 'metaTitle' => 'nullable|string|max:60',
                 'metaDescription' => 'nullable|string|max:160',
                 'keywords' => 'nullable|array',
+                'status' => 'required',
+
             ]);
 
             // Handle file upload
@@ -103,6 +105,7 @@ class AdminBlogsController extends Controller
                 'meta_title' => $request->metaTitle,
                 'meta_description' => $request->metaDescription,
                 'meta_keywords' => $metaKeywords,
+                'status' => $request->status,
                 'created_at' => $request->postDate,
                 'updated_at' => now(),
             ]);
@@ -145,6 +148,7 @@ class AdminBlogsController extends Controller
             'metaTitle' => 'nullable|string|max:60',
             'metaDescription' => 'nullable|string|max:160',
             'keywords' => 'nullable|array',
+            'status' => 'required',
         ]);
 
         // Handle file upload
@@ -175,6 +179,7 @@ class AdminBlogsController extends Controller
         $post->meta_title = $request->metaTitle;
         $post->meta_description = $request->metaDescription;
         $post->meta_keywords = $metaKeywords;
+        $post->status = $request->status;
         $post->created_at = $request->postDate;
         $post->updated_at = now();
         $post->save();
