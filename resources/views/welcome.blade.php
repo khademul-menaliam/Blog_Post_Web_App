@@ -33,7 +33,7 @@
                                                         <img src="{{ asset('assets/images/tag.svg') }}" alt="Tag">
                                                     </div>
                                                     <div class="date">
-                                                        <span>{{ $post->category->title }}</span>
+                                                        <span>{{ $post->category->title }} </span>
                                                     </div>
                                                 </div>
                                             </div>

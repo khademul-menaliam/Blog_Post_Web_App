@@ -12,7 +12,10 @@ class WelcomeController extends Controller
     {
 
         $blogs = Blog::where('status',1)->latest()->limit(4)->get();
-        $category = Category::all();
+        $category = Category::withCount(['posts as posts_count' => function($query) {
+            $query->where('status', 1);
+        }])->get();
+        //dd($category);
         $latestPost = Blog::where('status',1)->latest()->get();
 
 

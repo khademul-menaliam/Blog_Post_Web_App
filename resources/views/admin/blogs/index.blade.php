@@ -1,5 +1,8 @@
 @extends('admin.layouts.app')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
+@endpush
     {{-- @include('admin.layouts.partials.sidebar') --}}
     @section('title', 'Post List')
 
@@ -39,13 +42,24 @@
                                     </div>
                                 @endif
                         <!-- /.card-header -->
+
                         <div class="card-body">
+                            <div class="row">
+                                <div class="cal-md-5">
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="" {{ request('status') === null || request('status') === '' ? 'selected' : '' }}>All post</option>
+                                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Draft</option>
+                                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Published</option>
+                                    </select>
+                                </div>
+                            </div>
                             <table id="postlist" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>SL.</th>
                                         <th>Title</th>
-                                        <td>Author</td>
+                                        <th>Author</th>
+                                        <th>Views</th>
                                         <th>Category</th>
                                         <th>Description</th>
                                         <th>Image</th>
@@ -61,6 +75,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$post->title}}</td>
                             <td>{{ $post->user->name ?? 'N/A' }}</td>
+                            <td>{{ $post->views ?? 'N/A' }}</td>
                             <td>{{$post->category->title}}</td>
                             <td>{!! Str::limit($post->description, 80)!!}</td>
                             <td><img src="{{asset('assets/images/blog/'.$post->img)}}" width="50" height="50" alt="img"></td>
@@ -88,7 +103,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Title</th>
-                                        <td>Author</td>
+                                        <th>Author</th>
+                                        <th>Views</th>
                                         <th>Category</th>
                                         <th>desc</th>
                                         <th>img</th>
@@ -108,3 +124,23 @@
     </div>
     <!-- /.content -->
 @endsection
+@push('scripts')
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#status').on('change', function() {
+                let status = $(this).val();
+                let url = new URL(window.location.href);
+                if (status === "") {
+                    url.searchParams.delete('status');
+                } else {
+                    url.searchParams.set('status', status);
+                }
+                window.location.href = url.toString();
+            });
+        });
+    </script>
+    <script>
+        let table = new DataTable('#postlist');
+    </script>
+@endpush

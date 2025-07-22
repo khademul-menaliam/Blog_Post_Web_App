@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('title', getSiteSettings()->blog_meta_title)
 @section('description', getSiteSettings()->blog_meta_description)
 @section('keywords', getSiteSettings()->blog_meta_keywords)
@@ -23,7 +22,6 @@
 <!-- banner advertisement start -->
 <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
     <div class="container">
-
         <div class="row g-4">
             <div class="col-xl-3 order-xl-2">
 @include('layouts.partials.sidebar')

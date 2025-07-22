@@ -9,7 +9,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::where('status',1)->paginate(4);
-        $category = Category::all();
+        $category = Category::withCount(['posts as posts_count'])->get();
         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         return view('blogs.index', compact('blogs', 'category', 'latestPost'));
     }
@@ -30,6 +30,7 @@ class BlogController extends Controller
         public function show($slug)
     {
         $blog = Blog::where('status',1)->where('slug' , $slug)-> firstOrFail();
+        $blog -> increment('views');
         $category = Category::all();
         $latestPost = Blog::where('status',1)->latest()->limit(4)->get();
         $relatedPost = Blog::where('status',1)->where('category_id', $blog->category_id)

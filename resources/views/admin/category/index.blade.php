@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
-
+@push('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
+@endpush
     {{-- @include('admin.layouts.partials.sidebar') --}}
     @section('title', 'Category List')
 
@@ -99,3 +101,9 @@
 </div>
 <!-- /.content -->
 @endsection
+@push('scripts')
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#postlist');
+    </script>
+@endpush

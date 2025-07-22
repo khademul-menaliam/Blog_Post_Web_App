@@ -24,9 +24,15 @@ class AdminBlogsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::all();
+        $query = Blog::query()->with(['user', 'category']);
+
+        if ($request->has('status') && $request->status !== null && $request->status !== '') {
+            $query->where('status', $request->status);
+        }
+
+        $blogs = $query->get();
         $category = Category::all();
         $latestPost = Blog::latest()->limit(6)->get();
         return view('admin.blogs.index', compact('blogs', 'category', 'latestPost'));

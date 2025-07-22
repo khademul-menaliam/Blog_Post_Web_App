@@ -70,7 +70,7 @@
                             <div class="categories_list">
                                 <ul>
                                     @foreach($category as $data)
-                                        <li><a href="{{ route('category.show', $data->slug) }}">{{$data->title}}</a></li>
+                                        <li><a href="{{ route('category.show', $data->slug) }}">{{$data->title}} ({{ $data->posts_count ?? 0 }}) </a></li>
                                     @endforeach
                                 </ul>
                             </div>
