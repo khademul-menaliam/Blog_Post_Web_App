@@ -22,6 +22,7 @@ protected $table = 'posts';
         'meta_description',
         'meta_keywords',
         'status',
+        'is_banner',
     ];
 
     /**

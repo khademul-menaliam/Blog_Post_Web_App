@@ -99,6 +99,10 @@ class AdminBlogsController extends Controller
                 $metaKeywords = implode(', ', $request->keywords);
             }
 
+            if ($request->has('is_banner')) {
+                Blog::where('is_banner', 1)->update(['is_banner' => 0]);
+            }
+
 
             // Create the blog post
             $blog = Blog::create([
@@ -114,6 +118,7 @@ class AdminBlogsController extends Controller
                 'status' => $request->status,
                 'created_at' => $request->postDate,
                 'updated_at' => now(),
+                'is_banner' => $request->has('is_banner') ? 1 : 0,
             ]);
 
             return redirect()->route('admin.blogs.index')
@@ -177,6 +182,9 @@ class AdminBlogsController extends Controller
         if ($request->has('keywords')) {
             $metaKeywords = implode(', ', $request->keywords);
         }
+        if ($request->has('is_banner')) {
+            Blog::where('is_banner', 1)->where('id', '!=', $post->id)->update(['is_banner' => 0]);
+        }
 
         $post->title = $request->postTitle;
         $post->description = $request->description;
@@ -188,6 +196,7 @@ class AdminBlogsController extends Controller
         $post->status = $request->status;
         $post->created_at = $request->postDate;
         $post->updated_at = now();
+        $post->is_banner = $request->has('is_banner') ? 1 : 0;
         $post->save();
 
         return redirect()->route('admin.blogs.index')

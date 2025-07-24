@@ -60,6 +60,10 @@
                             <th>Date</th>
                             <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
                         </tr>
+                        <tr>
+                            <th>Is Banner</th>
+                            <td>{{ $post->is_banner ? 'Yes' : 'No' }}</td>
+                        </tr>
 
                             </table>
                         </div>

@@ -1,15 +1,17 @@
 @extends('layouts.app')
-
 @section('title', getSiteSettings()->meta_title)
 @section('description', getSiteSettings()->meta_description)
 @section('keywords', getSiteSettings()->meta_keywords)
 
-
 @section('content')
+@include('layouts.partials.banner')
+
 <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
     <div class="container">
         <div class="row g-4">
             <div class="col-xl-3 order-xl-2">
+
+
 @include('layouts.partials.sidebar')
             </div>
             <div class="col-xl-9 order-xl-1">

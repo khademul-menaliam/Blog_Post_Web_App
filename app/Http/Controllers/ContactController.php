@@ -12,7 +12,11 @@ class ContactController extends Controller
     {
         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         $categories = Category::all();
-        return view('pages.contact', compact('latestPost', 'categories'));
+        // Generate simple captcha
+        $num1 = rand(1, 10);
+        $num2 = rand(1, 10);
+        session(['contact_captcha_sum' => $num1 + $num2]);
+        return view('pages.contact', compact('latestPost', 'categories', 'num1', 'num2'));
 
         // $blogs = Blog::all();
         // return view('blogs.index', compact('blogs'));
@@ -26,9 +30,14 @@ class ContactController extends Controller
             'email' => 'required|email',
             'subjects'   => 'required|string|max:255',
             'message' => 'required|string',
+            'captcha_answer' => 'required|numeric',
         ]);
-        // Create and save the blog
-        Contact::create($request->all());
+        // Check captcha
+        if ((int)$request->input('captcha_answer') !== (int)session('contact_captcha_sum')) {
+            return redirect()->back()->withInput()->withErrors(['captcha_answer' => 'Incorrect captcha answer. Please try again.']);
+        }
+        // Create and save the contact
+        Contact::create($request->except(['captcha_answer']));
         return redirect()->route('contact.index')->with('success', 'Contact query created successfully.');
     }
 }

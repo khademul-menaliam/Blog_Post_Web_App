@@ -174,6 +174,10 @@
                                        <option value="1" {{$post->status == 1 ? 'selected': ''}}>Published</option>
                                     </select>
                                 </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="is_banner" name="is_banner" value="1" {{ old('is_banner', $post->is_banner) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_banner">Is Banner?</label>
+                                </div>
                             </div>
 
                             <!-- /.card-body -->

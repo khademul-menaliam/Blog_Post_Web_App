@@ -78,6 +78,7 @@
                             {{ session('success') }}
                             </div>
                         @endif
+
                     <form class="row" action="{{route('savecontact')}}" method="post">
                         @csrf
                         <div class="col-md-6 mb-3">
@@ -99,10 +100,18 @@
                             <textarea required="" name="message" id="message" placeholder="Write your message"
                                 class="form-control shadow-none" rows="5"></textarea>
                         </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="captcha" class="form-label form--label">What is {{ isset($num1) && isset($num2) ? "$num1 + $num2" : '' }} ? <span class="text-danger">*</span></label>
+                            <input type="text" name="captcha_answer" id="captcha_answer" placeholder="Enter the sum" class="form-control shadow-none" required="">
+                            @error('captcha_answer')
+                                <span class="text-danger small">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary btn-sm px-5 text-uppercase">Submit</button>
                         </div>
                     </form>
+
                 @if($errors->any())
                 <div class="alert alert-danger mt-2 mb-2">
                     <ul class="mb-0">
@@ -124,6 +133,9 @@
 
     </div>
 </div>
+@endsection
+
+@section('scripts')
 @endsection
 
 

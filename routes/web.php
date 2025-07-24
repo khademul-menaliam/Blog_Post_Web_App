@@ -20,8 +20,8 @@ use App\Http\Controllers\Admin\AdminCategoryController;
 
 use App\Http\Controllers\Admin\AdminPrivacyController;
 use App\Http\Controllers\Admin\AdminTermsController;
-use App\Http\Controllers\Admin\AdminAboutController;
-use App\Http\Controllers\Admin\AdminDisclaimerController;
+
+use App\Http\Controllers\Admin\AdminPagesController;
 
 use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -74,11 +74,14 @@ Route::put('/admin/privacy/update/{id}', [AdminPrivacyController::class, 'update
 Route::get('/admin/terms', [AdminTermsController::class, 'index'])->name('admin.pages.terms');
 Route::put('/admin/terms/update/{id}', [AdminTermsController::class, 'update'])->name('admin.terms.update');
 
-Route::get('/admin/about', [AdminAboutController::class, 'index'])->name('admin.pages.about');
-Route::put('/admin/about/update/{id}', [AdminAboutController::class, 'update'])->name('admin.about.update');
+Route::get('/admin/about', [AdminPagesController::class, 'about'])->name('admin.pages.about');
+Route::put('/admin/about/update/{id}', [AdminPagesController::class, 'aboutUpdate'])->name('admin.about.update');
 
-Route::get('/admin/disclaimer', [AdminDisclaimerController::class, 'index'])->name('admin.pages.disclaimer');
-Route::put('/admin/disclaimer/update/{id}', [AdminDisclaimerController::class, 'update'])->name('admin.disclaimer.update');
+Route::get('/admin/disclaimer', [AdminPagesController::class, 'disclaimer'])->name('admin.pages.disclaimer');
+Route::put('/admin/disclaimer/update/{id}', [AdminPagesController::class, 'disclaimerUpdate'])->name('admin.disclaimer.update');
+
+Route::get('/admin/contact', [AdminPagesController::class, 'contact'])->name('admin.contact.index');
+Route::delete('/admin/contact/delete/{id}',[AdminPagesController::class, 'contactDestroy'])->name('admin.contact.destroy');
 
 Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 Route::post('/admin/settings/update', [AdminSettingsController::class, 'update'])->name('admin.settings.update');
