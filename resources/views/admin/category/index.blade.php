@@ -34,12 +34,12 @@
                         <h3 class="card-title">Category</h3>
                         <a class="float-right" href="{{route('admin.category.create')}}">Create New + </a>
                     </div>
-                                @if(session('success'))
-                                    <div class="alert alert-success alert-dismissible">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="postlist" class="table table-bordered table-striped">
@@ -55,31 +55,26 @@
                             </thead>
                             <tbody>
                                 <!-- Demo data rows -->
-                            @foreach($categories as $category)
-
-                            <tr>
+                                @foreach($categories as $category)
+                                <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$category->title}}</td>
                                     <td>{{$category->user->name ?? 'N/A' }}</td>
                                     <td>{{$category->slug}}</td>
                                     <td>{{$category->created_at->format('d/ m/ Y')}}</td>
-                                <td>
-                                    <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm">View</a>
-                                    <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                    <td>
+                                        <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
 
-                                    <form action="{{route('admin.category.destroy', $category->id)}}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-
-                            @endforeach
-
-
+                                        <form action="{{route('admin.category.destroy', $category->id)}}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
-
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
@@ -92,6 +87,7 @@
                             </tfoot>
                         </table>
                     </div>
+
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

@@ -63,64 +63,7 @@
                             <h1>{{$blog->title}}</h1>
                         </div>
                         <div class="desc">
-                            Villa Torlonia
-                            Villa Torlonia is a historic villa with lovely grounds and neoclassical architecture. It was
-                            owned by the influential Torlonia family, renowned bankers in the 19th and early 20th
-                            centuries.
-
-
-                            The estate underwent substantial changes during their ownership, marked by the establishment
-                            of enchanting gardens. House of the Owls, Gardens, and Neoclassical Architecture holds the
-                            elegance of the period and the magnetic power of drawing tourists.
-
-
-                            The highlight of Villa Torlonia is Mussolini's bunker, an underground structure where the
-                            dictator sought refuge during World War II. The aristocratic origins of its role as
-                            Mussolini's residence provide a nuanced understanding of Italy's pivotal historical period.
-
-
-                            Situated approximately 4 kilometers (around 2.5 miles) northeast of the central Rome area,
-                            its historical and architectural treasuresmake it a worthwhile journey for those seeking a
-                            deeper exploration of Rome's diverse cultural heritage.
-
-
-                            Palazzo Doria Pamphilj
-                            Palazzo Doria Pamphilj is another architecture to explore for those fascinated by palaces
-                            after Villa Torlonia. The architecture of the palace featuring courtyards, galleries, and
-                            private spaces, is a testament to the grand architectural styles of its time.
-
-
-                            The Doria Pamphilj Gallery within the palace houses an extraordinary art collection,
-                            showcasing masterpieces by illustrious artists such as Raphael, Caravaggio, Titian, and
-                            Velázquez—making it a compelling attraction for art enthusiasts.
-
-
-                            Visitors can delve into the opulent lifestyle of noble families by exploring the private
-                            apartments of the palace. Lavish furnishings, decorative arts, and historical artifacts
-                            contribute to the immersive experience. The palace is at the center of Rome, near Piazza
-                            Venezia and the Pantheon, which will be a cherry on the ice cream for the tourists.
-
-                            Aventine Keyhole
-                            The Aventine Keyhole in Rome, a once-secret attraction, is gaining popularity. Located at
-                            the entrance of Priorato di Malta in the Aventine Hill neighborhood of Rome, the keyhole
-                            offers a unique view of St. Peter's Dome through exquisitely manicured hedges in a
-                            seldom-opened garden.
-
-                            This peculiar and free experience attracts visitors, but capturing the perfect photo may
-                            require adjusting for light and queuing. Nearby snack vendors offer refreshments. Accessible
-                            and enchanting, the Aventine Keyhole remains a hidden gem despite its growing renown.
-
-
-                            Enjoy City Tour provides a budget car rental Rome tour for enthusiastic tourists and helps
-                            delve into Rome's seen and unseen, heard and unheard beauty. Apart from the aforementioned
-                            places, there are other aesthetic places we can take you to and guide you on walking routes.
-
-
-                            We can offer you a tourist guide for a city sightseeing bus tour Rome. use our mobile app or
-                            website to book your desired rental car and a tourist guide for further help. We are here to
-                            assist you throughout your tour in Rome, Italy.
-
-
+                            {!! $blog->description !!}
                         </div>
                     </div>
                 </div>
@@ -130,6 +73,7 @@
     <!-- ======================= Blog Details End  ============================ -->
 
     <!-- ======================= Related Post Start  ============================ -->
+@if($relatedPost -> count() > 0)
     <div class="related_section pt-4 pb-4 border-top">
         <div class="container">
             <div class="section_heading pb-4">
@@ -138,8 +82,7 @@
             <div class="related_posts owl-theme owl-carousel">
                 <!-- blog post -->
 
-
-@foreach($relatedPost as $post)
+            @foreach($relatedPost as $post)
                 <!-- related post card here -->
                 {{-- releted post --}}
                 <div class="blog_post p-3 p-lg-4 card h-100 bg-transparent shadow-sm border-opacity-10">
@@ -188,11 +131,10 @@
                     </div>
                 </div>
             @endforeach
-
-
             </div>
         </div>
     </div>
+@endif
     <!-- ======================= Related Post End  ============================ -->
 
 

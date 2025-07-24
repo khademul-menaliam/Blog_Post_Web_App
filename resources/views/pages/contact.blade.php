@@ -14,7 +14,7 @@
     <div class="container">
         <nav>
             <ol class="breadcrumb m-0">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
                 <li class="breadcrumb-item active">Contact Us</li>
             </ol>
         </nav>
@@ -117,6 +117,7 @@
             <div class="col-xl-6">
                 <div class="ratio ratio-16x9">
                     <iframe src="{{getSiteSettings()->map_url}}" style="border:0; width:100%;" class="rounded" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
                 </div>
             </div>
         </div>

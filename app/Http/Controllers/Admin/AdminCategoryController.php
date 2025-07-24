@@ -10,21 +10,11 @@ use Illuminate\Support\Str;
 
 class AdminCategoryController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $categories = Category::all();
@@ -33,7 +23,6 @@ class AdminCategoryController extends Controller
 
     public function show($id)
     {
-
         $post = Category::find( $id);
         return view('admin.category.show', compact('post'));
     }
@@ -66,7 +55,6 @@ class AdminCategoryController extends Controller
             if ($request->has('keywords')) {
                 $metaKeywords = implode(', ', $request->keywords);
             }
-
 
             // Create the Category
             $category = Category::create([

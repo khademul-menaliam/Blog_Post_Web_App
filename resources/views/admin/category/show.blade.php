@@ -67,7 +67,11 @@
                         </tr>
 
                             </table>
+                            <div class="card-header col-ml-0">
+                                <a class="btn btn-info btn-sm" href="{{route('admin.category.edit', $post->id)}}">Edit </a>
+                            </div>
                         </div>
+
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->

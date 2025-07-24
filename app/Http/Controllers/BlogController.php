@@ -9,7 +9,9 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::where('status',1)->paginate(4);
-        $category = Category::withCount(['posts as posts_count'])->get();
+        $category = Category::withCount(['posts as posts_count' => function($query) {
+            $query->where('status', 1);
+        }])->get();
         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         return view('blogs.index', compact('blogs', 'category', 'latestPost'));
     }
@@ -35,9 +37,6 @@ class BlogController extends Controller
         $latestPost = Blog::where('status',1)->latest()->limit(4)->get();
         $relatedPost = Blog::where('status',1)->where('category_id', $blog->category_id)
           ->where('id', '!=', $blog->id)->limit(2)->get();
-         //dd($relatedPost);
-
-
         return view('blogs.show', compact('blog', 'category','latestPost','relatedPost'));
     }
     public function category($slug)
@@ -48,6 +47,9 @@ class BlogController extends Controller
         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
         return view('blogs.category', compact('blogs', 'category', 'currentCategory', 'latestPost'));
     }
+
+}
+
     // Show the form for creating a new blog
     // public function create()
     // {
@@ -97,4 +99,3 @@ class BlogController extends Controller
     //     $blog->delete();
     //     return redirect()->route('blog.index')->with('success', 'Blog deleted successfully.');
     // }
-}
