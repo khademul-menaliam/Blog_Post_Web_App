@@ -7,7 +7,7 @@
                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                   <li class="nav-item">
                      <a href="{{route('home')}}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-home"></i>
                         <p>
                               Dashboard
                         </p>
@@ -15,7 +15,7 @@
                   </li>
                     <li class="nav-item">
                      <a href="" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-list"></i>
                         <p>
                            Category
                            <i class="right fas fa-angle-left"></i>
@@ -38,7 +38,7 @@
                   </li>
                   <li class="nav-item menu-open">
                      <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-blog"></i>
                         <p>
                            Blog
                            <i class="right fas fa-angle-left"></i>
@@ -62,7 +62,7 @@
 
                   <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-file-alt"></i>
                                 <p>
                                     Pages
                                     <i class="right fas fa-angle-left"></i>
@@ -71,25 +71,25 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{route('admin.pages.privacy')}}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="far fa-user-secret nav-icon"></i>
                                         <p>Privacy Policy</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.pages.terms')}}" class="nav-link ">
-                                       <i class="far fa-circle nav-icon"></i>
+                                       <i class="far fa-file-contract nav-icon"></i>
                                        <p>Terms & Conditions</p>
                                     </a>
                                  </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.pages.about')}}" class="nav-link ">
-                                       <i class="far fa-circle nav-icon"></i>
+                                       <i class="far fa-info-circle nav-icon"></i>
                                        <p>About Us</p>
                                     </a>
                                  </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.pages.disclaimer')}}" class="nav-link ">
-                                       <i class="far fa-circle nav-icon"></i>
+                                       <i class="far fa-exclamation-circle nav-icon"></i>
                                        <p>Disclaimer</p>
                                     </a>
                                  </li>
@@ -97,7 +97,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-user-shield"></i>
                                 <p>
                                     Role & Permissions
                                     <i class="right fas fa-angle-left"></i>
@@ -106,29 +106,37 @@
                             <ul class="nav nav-treeview">
                               <li class="nav-item">
                                     <a href="permission/index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="far fa-users-cog nav-icon"></i>
                                         <p>Users Role</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="systemusers/index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="far fa-users nav-icon"></i>
                                         <p>System Users</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                     <li class="nav-item">
-                        <a href="{{route('admin.contact.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                        <a href="{{route('admin.pages.contact')}}" class="nav-link">
+                            <i class="nav-icon fas fa-envelope"></i>
                             <p>
                             Contact
                             </p>
                         </a>
                      </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.advertisement.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-ad"></i>
+                            <p>
+                                Advetisement
+                            </p>
+                        </a>
+                    </li>
                   <li class="nav-item">
                      <a href="{{route('admin.settings.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>
                            Web Setting
                            <span class="right badge badge-danger">New</span>
@@ -148,10 +156,6 @@
                          @csrf
                     </form>
                   </li>
-
-
-
-
                </ul>
             </nav>
          </div>

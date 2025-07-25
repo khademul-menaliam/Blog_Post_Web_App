@@ -20,6 +20,43 @@
     </div>
     <!-- ======================= breadcrumb End  ============================ -->
 <!-- banner advertisement start -->
+    @if($adBanner->count() > 0)
+
+        <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
+            <div class="container">
+                <div class="row g-4">
+    <!-- banner advertisement with no advertizement message start -->
+                    {{-- @forelse($adBanner as $banner)
+                        <div class="col-12 mt-0">
+                            <a target="_blank" href="{{ $banner->link }}">
+                                <div class="ad-banner">
+                                    <img src="{{ asset('assets/images/' . $banner->img) }}" alt="{{ $banner->name }}" class="ad-image">
+                                </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="col-12">
+                            <div class="text-center text-muted">No advertisement available at the moment.</div>
+                        </div>
+                    @endforelse --}}
+    <!-- end banner advertisement with no advertizement message start -->
+                @foreach($adBanner as $banner)
+                    <div class="col-12 ">
+                            <a target="_blank" href="{{ route('advertisement.clicks', $banner->id)   }}">
+                                <div class="ad-banner">
+                                    <img src="{{ asset('assets/images/' . $banner->img) }}" alt="{{ $banner->name }}" class="ad-image">
+                                </div>
+                            </a>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+        </div>
+
+    @endif
+{{-- <!-- banner advertisement end --> --}}
+
+
 <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
     <div class="container">
         <div class="row g-4">

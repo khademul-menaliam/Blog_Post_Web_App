@@ -122,12 +122,8 @@
                                 </form>
                             </td>
                         </tr>
-
                         @endforeach
-
-
                     </tbody>
-
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
@@ -149,6 +145,7 @@
                   </div>
                </div>
                <div class="row">
+
                   <!-- Latest Categories -->
                   <div class="col-lg-12 col-12">
                      <div class="card">

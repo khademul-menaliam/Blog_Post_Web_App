@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Blog; // Assumes you have a Blog model
 use App\Models\Category;
 
@@ -13,7 +15,8 @@ class BlogController extends Controller
             $query->where('status', 1);
         }])->get();
         $latestPost = Blog::where('status',1)->latest()->limit(6)->get();
-        return view('blogs.index', compact('blogs', 'category', 'latestPost'));
+        $adBanner = DB::table('advertisement')->where('status',1)->inRandomOrder()->limit('1')->get();
+        return view('blogs.index', compact('blogs', 'category', 'latestPost','adBanner'));
     }
     public function search(Request $request)
     {
@@ -37,7 +40,8 @@ class BlogController extends Controller
         $latestPost = Blog::where('status',1)->latest()->limit(4)->get();
         $relatedPost = Blog::where('status',1)->where('category_id', $blog->category_id)
           ->where('id', '!=', $blog->id)->limit(2)->get();
-        return view('blogs.show', compact('blog', 'category','latestPost','relatedPost'));
+        $adBanner = DB::table('advertisement')->where('status',1)->inRandomOrder()->limit('1')->get();
+        return view('blogs.show', compact('blog', 'category','latestPost','relatedPost','adBanner'));
     }
     public function category($slug)
     {

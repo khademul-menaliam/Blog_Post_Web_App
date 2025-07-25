@@ -17,6 +17,8 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AdminBlogsController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminAvertisementController;
+
 
 use App\Http\Controllers\Admin\AdminPrivacyController;
 use App\Http\Controllers\Admin\AdminTermsController;
@@ -41,6 +43,8 @@ Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy.index
 Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
 Route::get('/about', [PagesController::class, 'about'])->name('about.us.index');
 Route::get('/disclaimer', [PagesController::class, 'disclaimer'])->name('disclaimer.index');
+Route::get('/siteMap', [PagesController::class, 'siteMap'])->name('siteMap.index');
+Route::get('/advertisement/clicks/{slug}', [PagesController::class, 'clickCount'])->name('advertisement.clicks');
 
 
 
@@ -68,6 +72,14 @@ Route::get('/admin/category/edit/{id}', [AdminCategoryController::class, 'edit']
 Route::put('/admin/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/delete/{id}', [AdminCategoryController::class, 'destroy'])->name('admin.category.destroy');
 
+Route::get('/admin/advertisement', [AdminAvertisementController::class, 'index'])->name('admin.advertisement.index');
+Route::get('/admin/advertisement/create', [AdminAvertisementController::class, 'create'])->name('admin.advertisement.create');
+Route::post('/admin/advertisement/store', [AdminAvertisementController::class, 'store'])->name('admin.advertisement.store');
+Route::get('/admin/advertisement/show/{id}', [AdminAvertisementController::class, 'show'])->name('admin.advertisement.show');
+Route::get('/admin/advertisement/update/{id}', [AdminAvertisementController::class, 'edit'])->name('admin.advertisement.edit');
+Route::put('/admin/advertisement/update/{id}', [AdminAvertisementController::class, 'update'])->name('admin.advertisement.update');
+Route::delete('/admin/advertisement/delete/{id}', [AdminAvertisementController::class, 'destroy'])->name('admin.advertisement.destroy');
+
 Route::get('/admin/privacy', [AdminPrivacyController::class, 'index'])->name('admin.pages.privacy');
 Route::put('/admin/privacy/update/{id}', [AdminPrivacyController::class, 'update'])->name('admin.privacy.update');
 
@@ -80,8 +92,10 @@ Route::put('/admin/about/update/{id}', [AdminPagesController::class, 'aboutUpdat
 Route::get('/admin/disclaimer', [AdminPagesController::class, 'disclaimer'])->name('admin.pages.disclaimer');
 Route::put('/admin/disclaimer/update/{id}', [AdminPagesController::class, 'disclaimerUpdate'])->name('admin.disclaimer.update');
 
-Route::get('/admin/contact', [AdminPagesController::class, 'contact'])->name('admin.contact.index');
+Route::get('/admin/contact', [AdminPagesController::class, 'contact'])->name('admin.pages.contact');
 Route::delete('/admin/contact/delete/{id}',[AdminPagesController::class, 'contactDestroy'])->name('admin.contact.destroy');
+
+
 
 Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 Route::post('/admin/settings/update', [AdminSettingsController::class, 'update'])->name('admin.settings.update');

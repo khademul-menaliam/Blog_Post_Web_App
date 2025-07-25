@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Category;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -20,8 +21,12 @@ class WelcomeController extends Controller
         $mainBanner = Blog::where('status',1)->where('is_banner',1)->first();
         // dd($mainBanner);
         $othersBanner = Blog::where('status',1)->inRandomOrder()->limit('2')->get();
+        $adBanner = DB::table('advertisement')->where('status',1)->inRandomOrder()->limit('1')->get();
 
-        return view('welcome', compact('blogs', 'category','latestPost','mainBanner','othersBanner' ));
+
+
+
+        return view('welcome', compact('blogs', 'category','latestPost','mainBanner','othersBanner','adBanner' ));
     }
 
 }

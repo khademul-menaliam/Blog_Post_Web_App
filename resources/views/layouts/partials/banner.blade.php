@@ -40,24 +40,41 @@
     </div>
 <!-- ======================= slider End  ============================ -->
 
-{{-- <!-- banner advertisement start -->
-<div class="blog_section bg-white overflow-hidden pt-4 pb-4">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-12 mt-0">
-                @if($adBanner)
-                    <a href="{{ $adBanner->external_url ?? route('blog.show', $adBanner->slug) }}">
-                        <div class="ad-banner">
-                            <img src="{{ asset('assets/images/blog/' . $adBanner->img) }}" alt="{{ $adBanner->title }}" class="ad-image">
-                        </div>
-                    </a>
-                @else
-                    <!-- Optional fallback or placeholder -->
-                    <div class="text-center text-muted">No advertisement available at the moment.</div>
-                @endif
+<!-- banner advertisement start -->
+@if($adBanner->count() > 0)
+
+    <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
+        <div class="container">
+            <div class="row g-4">
+<!-- banner advertisement with no advertizement message start -->
+                {{-- @forelse($adBanner as $banner)
+                    <div class="col-12 mt-0">
+                        <a target="_blank" href="{{ $banner->link }}">
+                            <div class="ad-banner">
+                                <img src="{{ asset('assets/images/' . $banner->img) }}" alt="{{ $banner->name }}" class="ad-image">
+                            </div>
+                        </a>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="text-center text-muted">No advertisement available at the moment.</div>
+                    </div>
+                @endforelse --}}
+<!-- end banner advertisement with no advertizement message start -->
+            @foreach($adBanner as $banner)
+                <div class="col-12">
+                        <a target="_blank" href="{{route('advertisement.clicks', $banner->id) }}">
+                            <div class="ad-banner">
+                                <img src="{{ asset('assets/images/' . $banner->img) }}" alt="{{ $banner->name }}" class="ad-image">
+                            </div>
+                        </a>
+                </div>
+            @endforeach
             </div>
         </div>
     </div>
-</div>
-<!-- banner advertisement end --> --}}
+
+@endif
+    {{-- <!-- banner advertisement end --> --}}
+
 

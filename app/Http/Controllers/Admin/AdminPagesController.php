@@ -70,4 +70,6 @@ class AdminPagesController extends Controller
 
 
 
+
+
 }
