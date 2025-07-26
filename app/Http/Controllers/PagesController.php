@@ -30,7 +30,12 @@ class PagesController extends Controller
         // $content = DB::table('sitemap')->first();
         return view('pages.sitemap', compact('latestPost','categories'));
     }
-
+    public function xmlSiteMap()
+    {
+        $categories = Category::all();
+        $blogs = Blog::all();
+        return response()-> view('pages.xmlsitemap', compact('categories','blogs'))->header('Content-Type','application/xml');
+    }
 
     // Advertisement count
     public function clickCount($id)
@@ -39,6 +44,7 @@ class PagesController extends Controller
         $link = DB::table('advertisement')->where('id', $id)->first();
         return redirect()->away($link->link);
     }
+
 
 
 }

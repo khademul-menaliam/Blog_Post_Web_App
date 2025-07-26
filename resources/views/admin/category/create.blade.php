@@ -146,7 +146,7 @@
     </div>
     <!-- /.container-fluid -->
 </div>
-<!-- /.content -->>
+<!-- /.content -->
 @endsection
 @push('scripts')
     <!-- Include CKEditor 5 from CDN -->

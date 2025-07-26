@@ -105,9 +105,9 @@
                             </a>
                             <ul class="nav nav-treeview">
                               <li class="nav-item">
-                                    <a href="permission/index.html" class="nav-link">
+                                    <a href="{{route('admin.users.index')}}" class="nav-link">
                                         <i class="far fa-users-cog nav-icon"></i>
-                                        <p>Users Role</p>
+                                        <p>Admin</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

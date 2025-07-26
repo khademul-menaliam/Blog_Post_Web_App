@@ -15,6 +15,7 @@ use App\Http\Controllers\PagesController;
 
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminBlogsController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminAvertisementController;
@@ -44,6 +45,7 @@ Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
 Route::get('/about', [PagesController::class, 'about'])->name('about.us.index');
 Route::get('/disclaimer', [PagesController::class, 'disclaimer'])->name('disclaimer.index');
 Route::get('/siteMap', [PagesController::class, 'siteMap'])->name('siteMap.index');
+Route::get('/siteMapXML', [PagesController::class, 'xmlSiteMap'])->name('siteMap.xml');
 Route::get('/advertisement/clicks/{slug}', [PagesController::class, 'clickCount'])->name('advertisement.clicks');
 
 
@@ -55,6 +57,13 @@ Route::post('/savecontact', [ContactController::class, 'store'])->name('savecont
 
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/admin/users', [AdminAuthController::class, 'index'])->name('admin.users.index');
+Route::get('/admin/users/create', [AdminAuthController::class, 'create'])->name('admin.users.create');
+Route::post('/admin/users/store', [AdminAuthController::class, 'store'])->name('admin.users.store');
+Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name('admin.users.edit');
+Route::put('/admin/users/update/{id}', [AdminAuthController::class, 'update'])->name('admin.users.update');
+Route::delete('/admin/users/delete/{id}', [AdminAuthController::class, 'destroy'])->name('admin.users.destroy');
 
 Route::get('/admin/blogs', [AdminBlogsController::class, 'index'])->name('admin.blogs.index');
 Route::get('/admin/blog/create', [AdminBlogsController::class, 'create'])->name('admin.blog.create');
