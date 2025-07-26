@@ -1,24 +1,20 @@
 @extends('admin.layouts.app')
 
 {{-- @include('admin.layouts.partials.sidebar') --}}
-@section('title', 'Category Edit')
-@push('css')
-    <!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@section('title', 'user Edit')
 
-@endpush
 @section('content')
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Edit Category</h1>
+                    <h1 class="m-0">Edit user</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item ">Category List</li>
+                        <li class="breadcrumb-item ">users List</li>
                     </ol>
                 </div>
             </div>
@@ -33,11 +29,11 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Category</h3>
+                            <h3 class="card-title">Add New user</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('admin.category.update', $post->id)}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.users.update', $user->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -65,23 +61,75 @@
                                 </div>
                             @endif
 
+                                  {{-- Full Name --}}
                                 <div class="form-group">
-                                    <label for="postTitle">Category Title <span class="text-danger">*</span> </label>
-                                    <input type="text" class="form-control @error('postTitle') is-invalid @enderror" id="postTitle" name="postTitle" placeholder="Enter post title" value="{{ old('postTitle', $post->title) }}">
-                                    @error('postTitle')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="postSlug">Category Slug <span class="text-danger">*</span></label>
-                                    <input readonly type="text" class="form-control @error('postSlug') is-invalid @enderror" id="postSlug" name="postSlug" placeholder="Enter post Slug" value="{{ old('postSlug', $post->slug) }}">
-                                    @error('postSlug')
+                                    <label for="name">Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" name="name" placeholder="Enter full name" value="{{ old('name', $user->name)}}">
+                                    @error('name')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-
+                                {{-- Email --}}
                                 <div class="form-group">
+                                    <label for="email">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" placeholder="Enter email address" value="{{ old('email',$user->email) }}">
+                                    @error('email')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                {{-- Password --}}
+                                <div class="form-group">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" placeholder="Enter password">
+                                    @error('password')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                {{-- ROle --}}
+                                <div class="form-group">
+                                    <label for="role">Role <span class="text-danger">*</span></label>
+                                    <select class="form-control " id="role" name="role">
+
+                                        <option value="0" {{$user->role_id == 0 ? 'selected': ''}}>Admin</option>
+                                       <option value="1" {{$user->role_id == 1 ? 'selected': ''}}>Editor</option>
+
+                                    </select>
+                                </div>
+                                 {{-- Image --}}
+                                <div class="form-group">
+                                    <label for="postImage">Post Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input @error('img') is-invalid @enderror" id="img" name="img">
+                                            <label class="custom-file-label" for="postImage">Choose file</label>
+                                        </div>
+                                    </div>
+                                    @if($user->img)
+                                        <div class="mt-2">
+                                            <img src="{{ asset('assets/images/users/' . $user->img) }}" alt="Current Image" style="max-width: 150px;">
+                                        </div>
+                                    @endif
+                                    @error('img')
+                                        <span class="invalid-feedback d-block">{{ $message }}</span>
+                                    @enderror
+                                    {{-- status --}}
+                                </div>
+                                    <div class="form-group">
+                                    <label for="status">Select Status <span class="text-danger">*</span></label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                                        <option value="0" {{$user->status == 0 ? 'selected': ''}}>Draft</option>
+                                       <option value="1" {{$user->status == 1 ? 'selected': ''}}>Published</option>
+                                    </select>
+                                </div>
+
+
+                                {{-- <div class="form-group">
                                     <label for="postAuthor">Author <span class="text-danger">*</span></label>
 
                                     <select class="form-control @error('Author') is-invalid @enderror" id="Author" name="Author">
@@ -94,51 +142,15 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
 
-                                </div>
+                                </div> --}}
 
-                                <div class="form-group">
-                                    <label for="postDate">Date <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control @error('postDate') is-invalid @enderror" id="postDate" name="postDate" value="{{ old('postDate', $post->created_at ? \Carbon\Carbon::parse($post->postDate)->format('Y-m-d') : null) }}">
-                                    @error('postDate')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="metaTitle">Meta Title</label>
-                                    <input type="text" class="form-control @error('metaTitle') is-invalid @enderror" id="metaTitle" name="metaTitle" placeholder="Enter meta title (Maximum 60 charecter)" value="{{ old('metaTitle', $post->meta_title) }}">
-                                    @error('metaTitle')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="metaDescription">Meta Description</label>
-                                    <textarea class="form-control @error('metaDescription') is-invalid @enderror" id="metaDescription" name="metaDescription" rows="4" placeholder="Enter meta description (Maximum 160 charecter)">{{ old('metaDescription', $post->meta_description) }}</textarea>
-                                    @error('metaDescription')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="postTags">Meta Keywords</label>
-                                    <select class="form-control " id="keywords" name="keywords[]" multiple="multiple" >
-                                        @php
-                                            $keywords = old('keywords', explode(',', $post->meta_keywords)) ;
-                                        @endphp
-                                        @foreach($keywords as $keyword)
-                                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('keywords')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
                             </div>
 
                             <!-- /.card-body -->
 
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>
@@ -160,55 +172,11 @@
             let table = new DataTable('#postlist');
         });
     </script>
-  <script>
-    // Custom plugin (for example purposes, not adding functionality here)
-    function CustomizationPlugin(editor) {}
 
-    // Initialize CKEditor 5 with extended toolbar and plugins
-    ClassicEditor
-        .create(document.querySelector('#description'), {
-            extraPlugins: [CustomizationPlugin],
-            toolbar: {
-                items: [
-                    'heading', '|',
-                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-                    'indent', 'outdent', '|',
-                    'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
-                    'undo', 'redo', 'alignment', 'fontSize', 'fontColor', 'highlight', 'codeBlock'
-                ]
-            },
-            image: {
-                toolbar: [
-                    'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
-                ]
-            },
-            table: {
-                contentToolbar: [
-                    'tableColumn', 'tableRow', 'mergeTableCells'
-                ]
-            },
-            language: 'en'
-        })
-        .then(newEditor => {
-            window.editor = newEditor;
-            // The following line adds CKEditor 5 inspector.
-            CKEditorInspector.attach(newEditor, {
-                isCollapsed: true
-            });
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- jQuery (required) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<!-- Initialize Select2 -->
 
 
 

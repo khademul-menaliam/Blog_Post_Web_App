@@ -1,10 +1,6 @@
 @extends('admin.layouts.app')
 @section('title', 'User Create')
-@push('css')
-    <!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-@endpush
 @section('content')
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -35,7 +31,7 @@
                         <!-- /.card-header -->
                     <!-- form start -->
                         <!-- form start -->
-                    <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                             <div class="card-body">
                                 @if(session('success'))
@@ -91,6 +87,15 @@
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                     {{-- ROle --}}
+                                <div class="form-group">
+                                    <label for="role">Role <span class="text-danger">*</span></label>
+                                    <select class="form-control " id="role" name="role">
+                                        <option value="">Select Role</option>
+                                       <option value="1">Admin</option>
+                                       <option value="0">Editor</option>
+                                    </select>
+                                </div>
 
                                 {{-- Date of Birth (optional or required) --}}
                                 <div class="form-group">
@@ -104,12 +109,20 @@
 
                                 {{-- Profile Image --}}
                                 <div class="form-group">
-                                    <label for="image">Profile Image</label>
-                                    <input type="file" class="form-control-file @error('image') is-invalid @enderror"
-                                        id="image" name="image">
-                                    @error('image')
+                                    <label for="img">Profile Image <span class="text-danger">( Image size recomanded 100 x 100 )</span></label>
+                                    <input type="file" class="form-control-file @error('img') is-invalid @enderror"
+                                        id="img" name="img">
+                                    @error('img')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror
+                                </div>
+                                 {{-- Profile Status --}}
+                                <div class="form-group">
+                                    <label for="status">Select Status <span class="text-danger">*</span></label>
+                                    <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                                        <option value="0">Pending</option>
+                                       <option value="1">Active</option>
+                                    </select>
                                 </div>
                             </div>
 

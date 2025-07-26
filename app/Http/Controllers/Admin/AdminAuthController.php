@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
@@ -39,8 +41,9 @@ class AdminAuthController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6',
+                'role' => 'required',
                 'dob' => 'nullable|date',
-                'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+                'img' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             ]);
 
             // Handle file upload
@@ -58,14 +61,15 @@ class AdminAuthController extends Controller
                 $imagePath = $imageName;
             }
 
-            // Create the blog post
-            $blog = Blog::create([
-                'title' => $request->postTitle,
+            // Create the blog user
+            $user = User::create([
+                'name' => $request->name,
                 'email' => $request->email,
-                // 'password' => $request->password,
+                'password'   => Hash::make($request->password),
+                'role_id' => $request->role,
                 'img' => $imagePath,
                 'status' => $request->status,
-                'created_at' => $request->postDate,
+                'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
@@ -83,80 +87,67 @@ class AdminAuthController extends Controller
                 ]);
         }
     }
-    // public function edit($id)
-    // {
-    //     $post = Blog::findOrFail($id);
-    //     $categores = Category::all();
-    //     $users = User::all();
-    //     return view('admin.blogs.edit', compact('post', 'categores', 'users'));
-    // }
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact( 'user'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $post = Blog::findOrFail($id);
-    //     $request->validate([
-    //         'postTitle' => 'required|string|max:255',
-    //         'postCategory' => 'required|exists:categories,id',
-    //         'Author' => 'required|exists:users,id',
-    //         'description' => 'required|string',
-    //         'postDate' => 'required|date',
-    //         'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         'metaTitle' => 'nullable|string|max:60',
-    //         'metaDescription' => 'nullable|string|max:160',
-    //         'keywords' => 'nullable|array',
-    //         'status' => 'required',
-    //     ]);
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'required|min:6',
+            'role' => 'required',
+            'img' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
 
-    //     // Handle file upload
-    //     if ($request->hasFile('img')) {
-    //         // Delete old image if exists
-    //         if ($post->img && file_exists(public_path('assets/images/blog/' . $post->img))) {
-    //             unlink(public_path('assets/images/blog/' . $post->img));
-    //         }
-    //         $image = $request->file('img');
-    //         $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
-    //         $destinationPath = public_path('assets/images/blog');
-    //         if (!file_exists($destinationPath)) {
-    //             mkdir($destinationPath, 0755, true);
-    //         }
-    //         $image->move($destinationPath, $imageName);
-    //         $post->img = $imageName;
-    //     }
+        // Handle file upload
+        if ($request->hasFile('img')) {
+            // Delete old image if exists
+            if ($user->img && file_exists(public_path('assets/images/users/' . $user->img))) {
+                unlink(public_path('assets/images/users/' . $user->img));
+            }
+            $image = $request->file('img');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('assets/images/users');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $image->move($destinationPath, $imageName);
+            $user->img = $imageName;
+        }
 
-    //     $metaKeywords = null;
-    //     if ($request->has('keywords')) {
-    //         $metaKeywords = implode(', ', $request->keywords);
-    //     }
-    //     if ($request->has('is_banner')) {
-    //         Blog::where('is_banner', 1)->where('id', '!=', $post->id)->update(['is_banner' => 0]);
-    //     }
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role_id = $request->role;
+        $user->status = $request->status;
+        $user->password = Hash::make($request->password);
+        $user->updated_at = now();
+        $user->save();
 
-    //     $post->title = $request->postTitle;
-    //     $post->description = $request->description;
-    //     $post->category_id = $request->postCategory;
-    //     $post->user_id = $request->Author;
-    //     $post->meta_title = $request->metaTitle;
-    //     $post->meta_description = $request->metaDescription;
-    //     $post->meta_keywords = $metaKeywords;
-    //     $post->status = $request->status;
-    //     $post->created_at = $request->postDate;
-    //     $post->updated_at = now();
-    //     $post->is_banner = $request->has('is_banner') ? 1 : 0;
-    //     $post->save();
+        return redirect()->route('admin.users.index')
+            ->with('success', 'user updated successfully!');
+    }
 
-    //     return redirect()->route('admin.blogs.index')
-    //         ->with('success', 'Blog post updated successfully!');
-    // }
 
-    // public function destroy($id)
-    // {
-    //     $post = Blog::findOrFail($id);
-    //     // Delete image if exists
-    //     if ($post->img && file_exists(public_path('assets/images/blog/' . $post->img))) {
-    //         unlink(public_path('assets/images/blog/' . $post->img));
-    //     }
-    //     $post->delete();
-    //     return redirect()->route('admin.blogs.index')
-    //         ->with('success', 'Blog post deleted successfully!');
-    // }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        // Delete image if exists
+        if ($user->img && file_exists(public_path('assets/images/users/' . $user->img))) {
+            unlink(public_path('assets/images/users/' . $user->img));
+        }
+        $user->delete();
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User deleted successfully!');
+    }
+
+
+
+
+
 }
