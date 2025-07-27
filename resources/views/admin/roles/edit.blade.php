@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 {{-- @include('admin.layouts.partials.sidebar') --}}
-@section('title', 'Post Edit')
+@section('title', 'Rule Edit')
 @push('css')
     <!-- Select2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -13,12 +13,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Edit Post</h1>
+                    <h1 class="m-0">ule Edit</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item ">Post List</li>
+                        <li class="breadcrumb-item ">ule Edit</li>
                     </ol>
                 </div>
             </div>
@@ -33,11 +33,11 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Post</h3>
+                            <h3 class="card-title">Add New Rule</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{route('admin.blogs.update', $post->id)}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.roles.update', $post->id)}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
