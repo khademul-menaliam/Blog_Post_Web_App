@@ -16,6 +16,8 @@ use App\Http\Controllers\PagesController;
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminRoleController;
+
 use App\Http\Controllers\Admin\AdminBlogsController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminAvertisementController;
@@ -58,12 +60,23 @@ Route::post('/savecontact', [ContactController::class, 'store'])->name('savecont
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+// User
+
 Route::get('/admin/users', [AdminAuthController::class, 'index'])->name('admin.users.index');
 Route::get('/admin/users/create', [AdminAuthController::class, 'create'])->name('admin.users.create');
 Route::post('/admin/users/store', [AdminAuthController::class, 'store'])->name('admin.users.store');
 Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name('admin.users.edit');
 Route::put('/admin/users/update/{id}', [AdminAuthController::class, 'update'])->name('admin.users.update');
 Route::delete('/admin/users/delete/{id}', [AdminAuthController::class, 'destroy'])->name('admin.users.destroy');
+
+
+// admin role
+
+Route::get('/admin/users/roles', [AdminRoleController::class, 'index'])->name('admin.users.roles');
+Route::get('/admin/users/roles/create', [AdminRoleController::class, 'create'])->name('admin.users.roles.create');
+Route::post('/admin/users/roles/store', [AdminRoleController::class, 'store'])->name('admin.roles.store');
+
+// blog
 
 Route::get('/admin/blogs', [AdminBlogsController::class, 'index'])->name('admin.blogs.index');
 Route::get('/admin/blog/create', [AdminBlogsController::class, 'create'])->name('admin.blog.create');
@@ -73,6 +86,9 @@ Route::get('/admin/blogs/edit/{id}', [AdminBlogsController::class, 'edit'])->nam
 Route::put('/admin/blogs/update/{id}', [AdminBlogsController::class, 'update'])->name('admin.blogs.update');
 Route::delete('/admin/blogs/delete/{id}', [AdminBlogsController::class, 'destroy'])->name('admin.blogs.destroy');
 
+
+// category
+
 Route::get('/admin/category', [AdminCategoryController::class, 'index'])->name('admin.category.index');
 Route::get('/admin/category/create', [AdminCategoryController::class, 'create'])->name('admin.category.create');
 Route::post('/admin/category/store', [AdminCategoryController::class, 'store'])->name('admin.category.store');
@@ -80,6 +96,8 @@ Route::get('/admin/category/show/{id}', [AdminCategoryController::class, 'show']
 Route::get('/admin/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('admin.category.edit');
 Route::put('/admin/category/update/{id}', [AdminCategoryController::class, 'update'])->name('admin.category.update');
 Route::delete('/admin/category/delete/{id}', [AdminCategoryController::class, 'destroy'])->name('admin.category.destroy');
+
+// advertisement
 
 Route::get('/admin/advertisement', [AdminAvertisementController::class, 'index'])->name('admin.advertisement.index');
 Route::get('/admin/advertisement/create', [AdminAvertisementController::class, 'create'])->name('admin.advertisement.create');

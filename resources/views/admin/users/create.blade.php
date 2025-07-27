@@ -92,8 +92,9 @@
                                     <label for="role">Role <span class="text-danger">*</span></label>
                                     <select class="form-control " id="role" name="role">
                                         <option value="">Select Role</option>
-                                       <option value="1">Admin</option>
-                                       <option value="0">Editor</option>
+                                        @foreach($roles as $role)
+                                       <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -132,7 +133,7 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button type="reset" class="btn btn-secondary">Reset</button>
                     </div>
-                </form>
+                    </form>
                 </div>
                 <!-- /.card -->
             </div>

@@ -111,9 +111,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="systemusers/index.html" class="nav-link">
+                                    <a href="{{route('admin.users.roles')}}" class="nav-link">
                                         <i class="far fa-users nav-icon"></i>
-                                        <p>System Users</p>
+                                        <p>Admin Roles</p>
                                     </a>
                                 </li>
                             </ul>

@@ -127,8 +127,12 @@ class AdminCategoryController extends Controller
 
     public function destroy($id)
     {
-        $post = Category::findOrFail($id);
-        $post->delete();
+        $category = Category::findOrFail($id);
+        if ($category->posts()->count() > 0) {
+        return redirect()->route('admin.category.index')
+            ->with('error', 'Cannot delete category. First delete category releted post posts.');
+        }
+        $category->delete();
         return redirect()->route('admin.category.index')
             ->with('success', 'Category deleted successfully!');
     }

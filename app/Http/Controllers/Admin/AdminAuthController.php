@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminAuthController extends Controller
 {
@@ -24,13 +25,15 @@ class AdminAuthController extends Controller
 
     public function index(Request $request)
     {
+        $roles = Role::latest() ->get();
         $users = User::all();
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users','roles'));
 
     }
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::latest() ->get();
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -89,8 +92,9 @@ class AdminAuthController extends Controller
     }
     public function edit($id)
     {
+        $roles = Role::latest() ->get();
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact( 'user'));
+        return view('admin.users.edit', compact( 'user','roles'));
     }
 
     public function update(Request $request, $id)
@@ -132,22 +136,17 @@ class AdminAuthController extends Controller
             ->with('success', 'user updated successfully!');
     }
 
-
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        // Delete image if exists
-        if ($user->img && file_exists(public_path('assets/images/users/' . $user->img))) {
-            unlink(public_path('assets/images/users/' . $user->img));
+        if ($user->posts()->count() > 0) {
+        return redirect()->route('admin.users.index')
+            ->with('error', 'Cannot delete user. First delete user releted blog posts.');
         }
         $user->delete();
         return redirect()->route('admin.users.index')
-            ->with('success', 'User deleted successfully!');
+            ->with('success', 'user deleted successfully!');
+
     }
-
-
-
-
 
 }

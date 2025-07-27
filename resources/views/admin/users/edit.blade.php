@@ -95,10 +95,9 @@
                                 <div class="form-group">
                                     <label for="role">Role <span class="text-danger">*</span></label>
                                     <select class="form-control " id="role" name="role">
-
-                                        <option value="0" {{$user->role_id == 0 ? 'selected': ''}}>Admin</option>
-                                       <option value="1" {{$user->role_id == 1 ? 'selected': ''}}>Editor</option>
-
+                                        @foreach($roles as $role)
+                                       <option value="{{$role->id}}" {{$user->role_id == $role->id  ? 'selected': ''}}>{{$role->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                  {{-- Image --}}

@@ -40,6 +40,10 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
+
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="postlist" class="table table-bordered table-striped">
