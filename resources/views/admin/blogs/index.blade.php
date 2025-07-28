@@ -82,13 +82,18 @@
                                         <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
                                         <td>@if ($post->status==0) <span class="text-danger">Draft</span> @else <span class="text-success">Published</span>@endif </td>
                                         <td>
-                                            <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
+                                            @can('admin.blog-post.view')
+                                               <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
+                                            @endcan
+                                            @can('admin.blog-post.edit')
                                             <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                            @endcan
+                                            @can('admin.blog-post.delete')
                                             <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                            </form>
+                                            </form>@endcan
                                         </td>
                                     </tr>
                                     @endforeach
