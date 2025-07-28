@@ -21,6 +21,10 @@ class AdminAuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:admin.user.view')->only(['index','show']);
+        $this->middleware('can:admin.user.create')->only(['create']);
+        $this->middleware('can:admin.user.edit')->only(['edit']);
+        $this->middleware('can:admin.user.delete')->only(['destroy']);
     }
 
     public function index(Request $request)
@@ -64,6 +68,7 @@ class AdminAuthController extends Controller
                 $imagePath = $imageName;
             }
 
+
             // Create the blog user
             $user = User::create([
                 'name' => $request->name,
@@ -75,6 +80,11 @@ class AdminAuthController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            //asign role
+            $role = Role::findById($request->role);
+            $roleName = $role->name;
+            $user->assignRole($roleName);
 
             return redirect()->route('admin.users.index')
                 ->with('success', 'Users created successfully!');
@@ -128,9 +138,19 @@ class AdminAuthController extends Controller
         $user->email = $request->email;
         $user->role_id = $request->role;
         $user->status = $request->status;
-        $user->password = Hash::make($request->password);
+
+        if($request->password){
+            $user->password = Hash::make($request->password);
+        }
         $user->updated_at = now();
         $user->save();
+
+
+                //asign role
+            $role = Role::findById($request->role);
+            $roleName = $role->name;
+            $user->syncRoles($roleName);
+            // dd($user);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'user updated successfully!');

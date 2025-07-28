@@ -13,6 +13,10 @@ class AdminCategoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+         $this->middleware('can:admin.blog-category.view')->only(['index','show']);
+        $this->middleware('can:admin.blog-category.create')->only(['create']);
+        $this->middleware('can:admin.blog-category.edit')->only(['edit']);
+        $this->middleware('can:admin.blog-category.delete')->only(['destroy']);
     }
 
     public function index()

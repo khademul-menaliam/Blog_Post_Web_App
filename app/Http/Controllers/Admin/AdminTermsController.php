@@ -16,6 +16,7 @@ class AdminTermsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:admin.terms.edit')->only(['index','update']);
     }
 
     /**
@@ -27,11 +28,6 @@ class AdminTermsController extends Controller
     {
         $post = DB::table('terms')->first();
         return view('admin.pages.terms', compact('post'));
-    }
-
-        public function create()
-    {
-        return view('admin.blogs.create');
     }
         public function update(Request $request, $id)
     {

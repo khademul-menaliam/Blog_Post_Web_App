@@ -22,6 +22,10 @@ class AdminBlogsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('can:admin.blog-post.view')->only(['index','show']);
+        $this->middleware('can:admin.blog-post.create')->only(['create']);
+        $this->middleware('can:admin.blog-post.edit')->only(['edit']);
+        $this->middleware('can:admin.blog-post.delete')->only(['destroy']);
     }
 
     public function index(Request $request)

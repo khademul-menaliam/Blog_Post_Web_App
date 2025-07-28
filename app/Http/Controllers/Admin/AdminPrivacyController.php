@@ -16,6 +16,8 @@ class AdminPrivacyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('can:admin.privacy.edit')->only(['index','update']);
     }
 
     /**
