@@ -65,8 +65,8 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email ?? 'N/A' }}</td>
                                     <td><img src="{{asset('assets/images/users/'.$user->img)}}" width="50" height="50" alt="img"></td>
-                                    <td>{{$user->role->name ?? 'N/A' }}</td>
-                                    {{-- <td>{{ $roles->where('id', $user->role_id)->first()->name ?? 'No Role' }}</td> --}}
+                                    {{-- <td>{{$user->role->name ?? 'N/A' }}</td> --}}
+                                    <td>{{ $roles->where('id', $user->role_id)->first()->name ?? 'No Role' }}</td>
                                     <td>{{ optional($user->created_at)->format('d/m/Y') ?: 'N/A' }}</td>
                                     <td>
                                         <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-info btn-sm">Edit</a>

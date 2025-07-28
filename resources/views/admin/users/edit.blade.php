@@ -95,6 +95,7 @@
                                 <div class="form-group">
                                     <label for="role">Role <span class="text-danger">*</span></label>
                                     <select class="form-control " id="role" name="role">
+                                        <option value="">Select Role</option>
                                         @foreach($roles as $role)
                                        <option value="{{$role->id}}" {{$user->role_id == $role->id  ? 'selected': ''}}>{{$role->name}}</option>
                                         @endforeach
