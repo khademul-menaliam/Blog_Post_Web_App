@@ -72,7 +72,7 @@ Route::delete('/admin/users/delete/{id}', [AdminAuthController::class, 'destroy'
 
 // admin role
 
-Route::get('/admin/users/roles', [AdminRoleController::class, 'index'])->name('admin.users.roles');
+Route::get('/admin/users/roles', [AdminRoleController::class, 'index'])->name('admin.roles.index');
 Route::get('/admin/users/roles/create', [AdminRoleController::class, 'create'])->name('admin.users.roles.create');
 Route::post('/admin/users/roles/store', [AdminRoleController::class, 'store'])->name('admin.roles.store');
 Route::get('/admin/users/roles/edit/{id}', [AdminRoleController::class, 'edit'])->name('admin.roles.edit');

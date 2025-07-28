@@ -34,6 +34,13 @@
                          <a class="float-right" href="{{route('admin.users.roles.create')}}">Add Role +</a>
                     </div>
                     <!-- /.card-header -->
+                    @if(session('error'))
+                         <div class="alert alert-danger m-2">{{ session('error') }}</div>
+                    @endif
+                    @if(session('success'))
+                        <div class="alert alert-success m-2">{{ session('success') }}</div>
+                    @endif
+
 
                         <div class="card-body">
                             <table id="postlist" class="table table-bordered table-striped">
@@ -47,84 +54,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Demo data rows -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Super Admin</td>
-                                        <td><span class="badge badge-primary">Post List</span>, <span class="badge badge-primary">Post Create</span></td>
-                                        <td>2024-07-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-sm">Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($roles as  $role)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $role->name }}</td>
+                                            <td>
+                                                @if ($role->permissions->count() === $totalPermissionsCount)
+                                                    <span class="badge badge-success">All Permissions</span>
+                                                @else
+                                                    @foreach ($role->permissions as $permission)
+                                                        <span class="badge badge-primary">{{ $permission->name }}</span>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td>{{ $role->created_at->format('Y-m-d') }}</td>
+                                            <td>
+                                                <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-info btn-sm">Edit</a>
+
+                                                <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure you want to delete this role?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
+
 
                                 <tfoot>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Category Name</th>
-                                        <th>Author</th>
+                                        <th>SL.</th>
+                                        <th>Role Name</th>
+                                        <th>Permissions</th>
                                         <th>Date</th>
                                         <th>Actions</th>
                                     </tr>

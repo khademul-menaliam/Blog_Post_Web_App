@@ -31,10 +31,22 @@
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Create Rule</h3>
-                         <a class="float-right" href="{{route('admin.users.roles')}}">Back</a>
+                         <a class="float-right" href="{{route('admin.roles.index')}}">Back</a>
                     </div>
-                    <!-- /.card-header -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
+                    @if(session('success'))
+                        <div class="alert alert-success m-2">{{ session('success') }}</div>
+                    @endif
+                    <!-- /.card-header -->
                     <form method="POST" action="{{ route('admin.roles.store') }}">
                         @csrf
                         <div class="card-body">
