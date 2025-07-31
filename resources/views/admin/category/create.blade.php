@@ -114,7 +114,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="keywords">Keywords</label>
+                            <label for="keywords">Meta Keywords</label>
 
                             <div class="mt-2">
                                 <div id="selectedKeywords" class="form-control" style="min-height: 60px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa;">

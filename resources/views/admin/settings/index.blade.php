@@ -138,27 +138,7 @@
                                     @enderror
                                 </div>
                             </div>
-
-
-
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="keywords">Keywords</label>
-                                    <select class="form-control" id="keywords" name="keywords[]" multiple="multiple">
-                                        @php
-                                            $keywords = old('keywords', isset($data->meta_keywords) ? explode(',', $data->meta_keywords) : []);
-                                        @endphp
-                                        @foreach($keywords as $keyword)
-                                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('keywords')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="metaDescription">Meta Description</label>
                                     <textarea class="form-control @error('metaDescription') is-invalid @enderror" id="metaDescription" name="metaDescription" rows="4" placeholder="Enter meta description (Maximum 160 characters)">{{ old('metaDescription', $data->meta_description ?? '') }}</textarea>
@@ -167,6 +147,49 @@
                                     @enderror
                                 </div>
                             </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="keywords">Keywords</label>
+
+                                    <div class="mt-2">
+                                        <div id="selectedKeywords" class="form-control" style="min-height: 80px; max-height: 150px; overflow-y: auto; background-color: #f8f9fa;">
+                                            @if(old('keywords'))
+                                                @foreach(explode(',', old('keywords')) as $keyword)
+                                                    <span class="badge badge-primary mr-1 mb-1 keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @elseif(isset($data->meta_keywords) && $data->meta_keywords)
+                                                @foreach(explode(',', $data->meta_keywords) as $keyword)
+                                                    <span class="badge badge-primary mr-1 mb-1 keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <input type="hidden" id="keywords" name="keywords" value="{{ old('keywords', $data->meta_keywords ?? '') }}" />
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="keywordInput" placeholder="Enter keywords (separate with commas)" />
+                                            <small class="form-text text-muted">Type keywords and press Enter or click Add to add them</small>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="addKeyword()">Add</button>
+                                        </div>
+                                    </div>
+                                    @error('keywords')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
 
                             {{-- blog page meta --}}
                         <div class="col-lg-12">
@@ -192,14 +215,37 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="blog_keywords">Blog Keywords</label>
-                                    <select class="form-control" id="blog_keywords" name="blog_keywords[]" multiple="multiple">
-                                        @php
-                                            $blog_keywords = old('blog_keywords', isset($data->blog_meta_keywords) ? explode(',', $data->blog_meta_keywords) : []);
-                                        @endphp
-                                        @foreach($blog_keywords as $keyword)
-                                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                        @endforeach
-                                    </select>
+
+                                    <div class="mt-2">
+                                        <div id="selectedBlogKeywords" class="form-control" style="min-height: 100px; max-height: 180px; overflow-y: auto; background-color: #f8f9fa;">
+                                            @if(old('blog_keywords'))
+                                                @foreach(explode(',', old('blog_keywords')) as $keyword)
+                                                    <span class="badge badge-success mr-1 mb-1 blog-keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeBlogKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @elseif(isset($data->blog_meta_keywords) && $data->blog_meta_keywords)
+                                                @foreach(explode(',', $data->blog_meta_keywords) as $keyword)
+                                                    <span class="badge badge-success mr-1 mb-1 blog-keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeBlogKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <input type="hidden" id="blog_keywords" name="blog_keywords" value="{{ old('blog_keywords', $data->blog_meta_keywords ?? '') }}" />
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="blogKeywordInput" placeholder="Enter blog keywords (separate with commas)" />
+                                            <small class="form-text text-muted">Type keywords and press Enter or click Add to add them</small>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-sm btn-success" onclick="addBlogKeyword()">Add</button>
+                                        </div>
+                                    </div>
                                     @error('blog_keywords')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -238,14 +284,37 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="content_keywords">Content Keywords</label>
-                                    <select class="form-control" id="content_keywords" name="content_keywords[]" multiple="multiple">
-                                        @php
-                                            $content_keywords = old('content_keywords', isset($data->content_meta_keywords) ? explode(',', $data->content_meta_keywords) : []);
-                                        @endphp
-                                        @foreach($content_keywords as $keyword)
-                                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                        @endforeach
-                                    </select>
+
+                                    <div class="mt-2">
+                                        <div id="selectedContentKeywords" class="form-control" style="min-height: 120px; max-height: 220px; overflow-y: auto; background-color: #f8f9fa;">
+                                            @if(old('content_keywords'))
+                                                @foreach(explode(',', old('content_keywords')) as $keyword)
+                                                    <span class="badge badge-info mr-1 mb-1 content-keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeContentKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @elseif(isset($data->content_meta_keywords) && $data->content_meta_keywords)
+                                                @foreach(explode(',', $data->content_meta_keywords) as $keyword)
+                                                    <span class="badge badge-info mr-1 mb-1 content-keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeContentKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <input type="hidden" id="content_keywords" name="content_keywords" value="{{ old('content_keywords', $data->content_meta_keywords ?? '') }}" />
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="contentKeywordInput" placeholder="Enter content keywords (separate with commas)" />
+                                            <small class="form-text text-muted">Type keywords and press Enter or click Add to add them</small>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-sm btn-info" onclick="addContentKeyword()">Add</button>
+                                        </div>
+                                    </div>
                                     @error('content_keywords')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -283,3 +352,199 @@
 </div>
 <!-- /.content -->
 @endsection
+
+@push('scripts')
+<!-- Keywords Management Scripts -->
+<script>
+    // General Keywords Functions
+    function addKeyword() {
+        const input = document.getElementById('keywordInput');
+        const keywords = input.value.trim();
+
+        if (keywords) {
+            const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+            keywordArray.forEach(keyword => {
+                if (keyword && !isKeywordExists(keyword, 'keyword-tag')) {
+                    addKeywordTag(keyword, 'selectedKeywords', 'keyword-tag');
+                }
+            });
+            input.value = '';
+            updateHiddenInput('selectedKeywords', 'keywords');
+        }
+    }
+
+    function addKeywordTag(keyword, containerId, tagClass) {
+        const container = document.getElementById(containerId);
+        const tag = document.createElement('span');
+        tag.className = `badge badge-primary mr-1 mb-1 ${tagClass}`;
+        tag.setAttribute('data-keyword', keyword);
+        tag.innerHTML = `
+            ${keyword}
+            <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+        `;
+        container.appendChild(tag);
+    }
+
+    function removeKeyword(element) {
+        element.parentElement.remove();
+        updateHiddenInput('selectedKeywords', 'keywords');
+    }
+
+    function isKeywordExists(keyword, tagClass) {
+        const existingTags = document.querySelectorAll(`.${tagClass}`);
+        for (let tag of existingTags) {
+            if (tag.getAttribute('data-keyword').toLowerCase() === keyword.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function updateHiddenInput(containerId, hiddenInputId) {
+        const tags = document.querySelectorAll(`#${containerId} .keyword-tag, #${containerId} .blog-keyword-tag, #${containerId} .content-keyword-tag`);
+        const keywords = Array.from(tags).map(tag => tag.getAttribute('data-keyword')).join(',');
+        document.getElementById(hiddenInputId).value = keywords;
+    }
+
+    // Blog Keywords Functions
+    function addBlogKeyword() {
+        const input = document.getElementById('blogKeywordInput');
+        const keywords = input.value.trim();
+
+        if (keywords) {
+            const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+            keywordArray.forEach(keyword => {
+                if (keyword && !isBlogKeywordExists(keyword)) {
+                    addBlogKeywordTag(keyword);
+                }
+            });
+            input.value = '';
+            updateBlogHiddenInput();
+        }
+    }
+
+    function addBlogKeywordTag(keyword) {
+        const container = document.getElementById('selectedBlogKeywords');
+        const tag = document.createElement('span');
+        tag.className = 'badge badge-success mr-1 mb-1 blog-keyword-tag';
+        tag.setAttribute('data-keyword', keyword);
+        tag.innerHTML = `
+            ${keyword}
+            <i class="fas fa-times ml-1" onclick="removeBlogKeyword(this)" style="cursor: pointer;"></i>
+        `;
+        container.appendChild(tag);
+    }
+
+    function removeBlogKeyword(element) {
+        element.parentElement.remove();
+        updateBlogHiddenInput();
+    }
+
+    function isBlogKeywordExists(keyword) {
+        const existingTags = document.querySelectorAll('.blog-keyword-tag');
+        for (let tag of existingTags) {
+            if (tag.getAttribute('data-keyword').toLowerCase() === keyword.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function updateBlogHiddenInput() {
+        const tags = document.querySelectorAll('.blog-keyword-tag');
+        const keywords = Array.from(tags).map(tag => tag.getAttribute('data-keyword')).join(',');
+        document.getElementById('blog_keywords').value = keywords;
+    }
+
+    // Content Keywords Functions
+    function addContentKeyword() {
+        const input = document.getElementById('contentKeywordInput');
+        const keywords = input.value.trim();
+
+        if (keywords) {
+            const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+            keywordArray.forEach(keyword => {
+                if (keyword && !isContentKeywordExists(keyword)) {
+                    addContentKeywordTag(keyword);
+                }
+            });
+            input.value = '';
+            updateContentHiddenInput();
+        }
+    }
+
+    function addContentKeywordTag(keyword) {
+        const container = document.getElementById('selectedContentKeywords');
+        const tag = document.createElement('span');
+        tag.className = 'badge badge-info mr-1 mb-1 content-keyword-tag';
+        tag.setAttribute('data-keyword', keyword);
+        tag.innerHTML = `
+            ${keyword}
+            <i class="fas fa-times ml-1" onclick="removeContentKeyword(this)" style="cursor: pointer;"></i>
+        `;
+        container.appendChild(tag);
+    }
+
+    function removeContentKeyword(element) {
+        element.parentElement.remove();
+        updateContentHiddenInput();
+    }
+
+    function isContentKeywordExists(keyword) {
+        const existingTags = document.querySelectorAll('.content-keyword-tag');
+        for (let tag of existingTags) {
+            if (tag.getAttribute('data-keyword').toLowerCase() === keyword.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function updateContentHiddenInput() {
+        const tags = document.querySelectorAll('.content-keyword-tag');
+        const keywords = Array.from(tags).map(tag => tag.getAttribute('data-keyword')).join(',');
+        document.getElementById('content_keywords').value = keywords;
+    }
+
+    // Handle Enter key in input fields
+    document.addEventListener('DOMContentLoaded', function() {
+        // General keywords
+        const input = document.getElementById('keywordInput');
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addKeyword();
+                }
+            });
+        }
+
+        // Blog keywords
+        const blogInput = document.getElementById('blogKeywordInput');
+        if (blogInput) {
+            blogInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addBlogKeyword();
+                }
+            });
+        }
+
+        // Content keywords
+        const contentInput = document.getElementById('contentKeywordInput');
+        if (contentInput) {
+            contentInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addContentKeyword();
+                }
+            });
+        }
+
+        // Initialize hidden inputs with existing keywords
+        updateHiddenInput('selectedKeywords', 'keywords');
+        updateBlogHiddenInput();
+        updateContentHiddenInput();
+    });
+</script>
+@endpush

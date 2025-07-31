@@ -146,15 +146,31 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="postTags">Keywords</label>
-                                    <select class="form-control " id="keywords" name="keywords[]" multiple="multiple" >
+                                    <label for="keywords">Keywords</label>
+
+                                    <div class="mt-2">
+                                        <div id="selectedKeywords" class="form-control" style="min-height: 60px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa;">
                                         @if(old('keywords'))
                                             @foreach(explode(',', old('keywords')) as $keyword)
-                                             <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
+                                                    <span class="badge badge-primary mr-1 mb-1 keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                        {{ trim($keyword) }}
+                                                        <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+                                                    </span>
                                             @endforeach
                                         @endif
+                                        </div>
+                                        <input type="hidden" id="keywords" name="keywords" value="{{ old('keywords') }}" />
+                                    </div>
 
-                                    </select>
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="keywordInput" placeholder="Enter keywords (separate with commas)" />
+                                            <small class="form-text text-muted">Type keywords and press Enter or click Add to add them</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="addKeyword()">Add</button>
+                                        </div>
+                                    </div>
                                     @error('keywords')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -264,18 +280,75 @@
 <!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- Initialize Select2 -->
+<!-- Keywords Management Script -->
 <script>
-    $(document).ready(function() {
-        $('#keywords').select2({
-            tags: true,
-            tokenSeparators: [','],
-            placeholder: "Enter keywords...",
-            width: '100%'
-        });
+    function addKeyword() {
+        const input = document.getElementById('keywordInput');
+        const keywords = input.value.trim();
+
+        if (keywords) {
+            // Split by commas and add each keyword
+            const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+
+            keywordArray.forEach(keyword => {
+                if (keyword && !isKeywordExists(keyword)) {
+                    addKeywordTag(keyword);
+                }
+            });
+
+            input.value = '';
+            updateHiddenInput();
+        }
+    }
+
+    function addKeywordTag(keyword) {
+        const container = document.getElementById('selectedKeywords');
+        const tag = document.createElement('span');
+        tag.className = 'badge badge-primary mr-1 mb-1 keyword-tag';
+        tag.setAttribute('data-keyword', keyword);
+        tag.innerHTML = `
+            ${keyword}
+            <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+        `;
+        container.appendChild(tag);
+    }
+
+    function removeKeyword(element) {
+        element.parentElement.remove();
+        updateHiddenInput();
+    }
+
+    function isKeywordExists(keyword) {
+        const existingTags = document.querySelectorAll('.keyword-tag');
+        for (let tag of existingTags) {
+            if (tag.getAttribute('data-keyword').toLowerCase() === keyword.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function updateHiddenInput() {
+        const tags = document.querySelectorAll('.keyword-tag');
+        const keywords = Array.from(tags).map(tag => tag.getAttribute('data-keyword')).join(',');
+        document.getElementById('keywords').value = keywords;
+    }
+
+    // Handle Enter key in input field
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('keywordInput');
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addKeyword();
+                }
+            });
+        }
+
+        // Initialize hidden input with existing keywords
+        updateHiddenInput();
     });
 </script>
-
-
 
 @endpush

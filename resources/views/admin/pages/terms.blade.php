@@ -68,16 +68,38 @@
                                             <textarea name="meta_desc" id="meta_desc" placeholder="meta desc" class="form-control" rows="2">{{ old('metaDescription', $post->meta_description) }}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_keywords">Meta Keywords</label>
-                                            {{-- <input type="text" class="form-control" name="meta_keywords" id="meta_keywords" placeholder="meta keywords"> --}}
-                                        <select class="form-control " id="keywords" name="keywords[]" multiple="multiple" >
-                                        @php
-                                            $keywords = old('keywords', explode(',', $post->meta_keywords)) ;
-                                        @endphp
-                                        @foreach($keywords as $keyword)
-                                            <option value="{{ $keyword }}" selected>{{ $keyword }}</option>
-                                        @endforeach
-                                    </select>
+                                            <label for="keywords">Keywords</label>
+
+                                            <div class="mt-2">
+                                                <div id="selectedKeywords" class="form-control" style="min-height: 60px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa;">
+                                                    @if(old('keywords'))
+                                                        @foreach(explode(',', old('keywords')) as $keyword)
+                                                            <span class="badge badge-primary mr-1 mb-1 keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                                {{ trim($keyword) }}
+                                                                <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+                                                            </span>
+                                                        @endforeach
+                                                    @elseif($post->meta_keywords)
+                                                        @foreach(explode(',', $post->meta_keywords) as $keyword)
+                                                            <span class="badge badge-primary mr-1 mb-1 keyword-tag" data-keyword="{{ trim($keyword) }}">
+                                                                {{ trim($keyword) }}
+                                                                <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+                                                            </span>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                                <input type="hidden" id="keywords" name="keywords" value="{{ old('keywords', $post->meta_keywords) }}" />
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="keywordInput" placeholder="Enter keywords (separate with commas)" />
+                                                    <small class="form-text text-muted">Type keywords and press Enter or click Add to add them</small>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="addKeyword()">Add</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -97,3 +119,76 @@
 </div>
 <!-- /.content -->
 @endsection
+
+@push('scripts')
+<!-- Keywords Management Script -->
+<script>
+    function addKeyword() {
+        const input = document.getElementById('keywordInput');
+        const keywords = input.value.trim();
+
+        if (keywords) {
+            // Split by commas and add each keyword
+            const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+
+            keywordArray.forEach(keyword => {
+                if (keyword && !isKeywordExists(keyword)) {
+                    addKeywordTag(keyword);
+                }
+            });
+
+            input.value = '';
+            updateHiddenInput();
+        }
+    }
+
+    function addKeywordTag(keyword) {
+        const container = document.getElementById('selectedKeywords');
+        const tag = document.createElement('span');
+        tag.className = 'badge badge-primary mr-1 mb-1 keyword-tag';
+        tag.setAttribute('data-keyword', keyword);
+        tag.innerHTML = `
+            ${keyword}
+            <i class="fas fa-times ml-1" onclick="removeKeyword(this)" style="cursor: pointer;"></i>
+        `;
+        container.appendChild(tag);
+    }
+
+    function removeKeyword(element) {
+        element.parentElement.remove();
+        updateHiddenInput();
+    }
+
+    function isKeywordExists(keyword) {
+        const existingTags = document.querySelectorAll('.keyword-tag');
+        for (let tag of existingTags) {
+            if (tag.getAttribute('data-keyword').toLowerCase() === keyword.toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function updateHiddenInput() {
+        const tags = document.querySelectorAll('.keyword-tag');
+        const keywords = Array.from(tags).map(tag => tag.getAttribute('data-keyword')).join(',');
+        document.getElementById('keywords').value = keywords;
+    }
+
+    // Handle Enter key in input field
+    document.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('keywordInput');
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addKeyword();
+                }
+            });
+        }
+
+        // Initialize hidden input with existing keywords
+        updateHiddenInput();
+    });
+</script>
+@endpush
