@@ -90,7 +90,6 @@
                             @error('Author')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
-
                         </div>
                         <div class="form-group">
                             <label for="postDate">Date <span class="text-danger">*</span></label>
