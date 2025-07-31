@@ -4,33 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class AdminProfileController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+
     public function index()
     {
-        return view('admin.profile.index');
+        $admin = DB::table('users')->first();
+        $roles = Role::latest() ->get();
+        return view('admin.profile.show', compact('admin','roles'));
     }
-
-        public function create()
-    {
-        return view('admin.profile.create');
-    }
-
 
 }

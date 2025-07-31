@@ -1,85 +1,77 @@
 @extends('admin.layouts.app')
 
     {{-- @include('admin.layouts.partials.sidebar') --}}
-    @section('title', 'Admin Settings')
+    @section('title', 'Profile')
 
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">update profile</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item">update profile</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.content-header -->
-
-<!-- Main content -->
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Add Role Form -->
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Update Profile</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="fullname">Full Name</label>
-                                        <input type="text" required class="form-control" name="fullname" id="fullname" value="Rony">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control" name="email" id="email" value="rony@gmail.com" readonly required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" class="form-control" name="phone" id="phone" value="01454541122" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">Password (Optional)</label>
-                                        <input type="text" class="form-control" name="password" id="password" placeholder="Enter new password">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                        </div>
-                    </form>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Profile View</h1>
                 </div>
-                <!-- /.card -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item ">Profile View</li>
+                    </ol>
+                </div>
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
-</div>
-<!-- /.content -->
+    <!-- /.content-header -->
 
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Profile</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="postlist" class="table table-bordered table-striped">
+                        <!-- Demo data rows -->
+                        <tr>
+                            <th>Full Name</th>
+                            <td>{{ $admin->name ?? 'N/A' }}</td>
+                        </tr>
+                         <tr>
+                            <th>Email</th>
+                            <td>{{ $admin->email ?? 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left align-middle">Profile Image </th>
+                            <td><img src="{{asset('assets/images/users/'.$admin->img)}}" width="200" alt="img"></td>
+                        </tr>
+                        <tr>
+                            <th>Role</th>
+                            <td>
+                                {{ $roles->where('id', $admin->role_id)->first()->name ?? 'User' }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>Registration Date</th>
+                            <td>{{ $admin->created_at ?? 'N/A' }}</td>
+                        </tr>
+                         <tr>
+                            <th>Last Update</th>
+                            <td>{{ $admin->updated_at ?? 'N/A' }}</td>
+                        </tr>
+
+                            </table>
+                        </div>
+
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
 @endsection

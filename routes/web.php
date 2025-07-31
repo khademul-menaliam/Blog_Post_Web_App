@@ -69,6 +69,9 @@ Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name
 Route::put('/admin/users/update/{id}', [AdminAuthController::class, 'update'])->name('admin.users.update');
 Route::delete('/admin/users/delete/{id}', [AdminAuthController::class, 'destroy'])->name('admin.users.destroy');
 
+Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
+// Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name('admin.profile.update');
+
 
 // admin role
 
@@ -130,4 +133,4 @@ Route::delete('/admin/contact/delete/{id}',[AdminPagesController::class, 'contac
 Route::get('/admin/settings', [AdminSettingsController::class, 'index'])->name('admin.settings.index');
 Route::post('/admin/settings/update', [AdminSettingsController::class, 'update'])->name('admin.settings.update');
 
-Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
+
