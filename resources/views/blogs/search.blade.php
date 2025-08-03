@@ -1,10 +1,6 @@
 @extends('layouts.app')
-
 @section('title', 'Posts by Search')
-
-
 @section('content')
-
     <!-- ======================= breadcrumb Start  ============================ -->
     <div class="breadcrumb_sec py-3">
         <div class="container">
@@ -20,7 +16,6 @@
 <!-- banner advertisement start -->
 <div class="blog_section bg-white overflow-hidden pt-4 pb-4">
     <div class="container">
-
         <div class="row g-4">
             <div class="col-xl-3 order-xl-2">
             @include('layouts.partials.sidebar')
@@ -98,8 +93,6 @@
                 <div class="pagination mt-5 mb-2 d-flex justify-content-center">
                     {{$blogs->links('pagination::bootstrap-5')}}
                  </div>
-
-
                     </div>
                         <div class="btn-readmore mt-5 text-center">
                         <a class="readmoreanhr btn btn-primary" href="{{route('blogs.index')}}">See More Post</a>
