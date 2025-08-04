@@ -36,35 +36,35 @@
                         <div class="card-body">
                             <table id="postlist" class="table table-bordered table-striped">
                         <!-- Demo data rows -->
-                        <tr>
-                            <th>Title</th>
-                            <td>{{$post->title}}</td>
-                        </tr>
-                         <tr>
-                            <th>Slug</th>
-                            <td>{{$post->slug}}</td>
-                        </tr>
-                        <tr>
-                            <th>Meta Title</th>
-                            <td>{{$post->meta_title}}</td>
-                        </tr>
-                        <tr>
-                            <th>Description</th>
-                            <td>{!! $post->meta_description !!}</td>
-                        </tr>
+                            <tr>
+                                <th>Title</th>
+                                <td>{{$post->title}}</td>
+                            </tr>
+                            <tr>
+                                <th>Slug</th>
+                                <td>{{$post->slug}}</td>
+                            </tr>
+                            <tr>
+                                <th>Meta Title</th>
+                                <td>{{$post->meta_title}}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{!! $post->meta_description !!}</td>
+                            </tr>
 
-                        <tr>
-                            <th>Author</th>
-                            <td>{{ $post->user->name ?? 'Unknown' }}</td>
-                        </tr>
-                         <tr>
-                            <th>Meta Keywords</th>
-                            <td>{{$post->meta_keywords}}</td>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
-                        </tr>
+                            <tr>
+                                <th>Author</th>
+                                <td>{{ $post->user->name ?? 'Unknown' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Meta Keywords</th>
+                                <td>{{$post->meta_keywords}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
+                            </tr>
 
                             </table>
                             <div class="card-header col-ml-0">
