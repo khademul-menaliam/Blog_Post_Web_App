@@ -45,21 +45,21 @@
                                 @endif
 
                                 @if(session('error') || session('error_detail'))
-                                <div class="alert alert-danger alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <ul class="mb-0">
-                                        @if(session('error'))
-                                            <li>{{ session('error') }}</li>
-                                        @endif
-                                        @if(session('error_detail'))
-                                            <li><strong>Details:</strong> {{ session('error_detail') }}</li>
-                                        @endif
-                                        @foreach($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <ul class="mb-0">
+                                            @if(session('error'))
+                                                <li>{{ session('error') }}</li>
+                                            @endif
+                                            @if(session('error_detail'))
+                                                <li><strong>Details:</strong> {{ session('error_detail') }}</li>
+                                            @endif
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
 
                                   {{-- Full Name --}}
                                 <div class="form-group">
@@ -101,7 +101,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                 {{-- Image --}}
+
+                                {{-- Image --}}
                                 <div class="form-group">
                                     <label for="postImage">Post Image</label>
                                     <div class="input-group">
@@ -118,7 +119,8 @@
                                     @error('img')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror
-                                    {{-- status --}}
+
+                                {{-- status --}}
                                 </div>
                                     <div class="form-group">
                                     <label for="status">Select Status <span class="text-danger">*</span></label>
@@ -128,26 +130,8 @@
                                     </select>
                                 </div>
 
-
-                                {{-- <div class="form-group">
-                                    <label for="postAuthor">Author <span class="text-danger">*</span></label>
-
-                                    <select class="form-control @error('Author') is-invalid @enderror" id="Author" name="Author">
-                                        <option value="">Select Author</option>
-                                        @foreach($users as $user)
-                                            <option value="{{$user->id}}" {{ old('Author', $post->user_id) == $user->id ? 'selected' : '' }}>{{$user->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('Author')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-
-                                </div> --}}
-
                             </div>
-
                             <!-- /.card-body -->
-
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Update</button>
                                 <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>

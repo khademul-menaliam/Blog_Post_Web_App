@@ -13,11 +13,7 @@ use Spatie\Permission\Models\Role;
 
 class AdminAuthController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -68,8 +64,7 @@ class AdminAuthController extends Controller
                 $imagePath = $imageName;
             }
 
-
-            // Create the blog user
+            // Create the user
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -85,12 +80,9 @@ class AdminAuthController extends Controller
             $role = Role::findById($request->role);
             $roleName = $role->name;
             $user->assignRole($roleName);
-
-            return redirect()->route('admin.users.index')
-                ->with('success', 'Users created successfully!');
+            return redirect()->route('admin.users.index')->with('success', 'Users created successfully!');
 
         }
-
         catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -145,12 +137,10 @@ class AdminAuthController extends Controller
         $user->updated_at = now();
         $user->save();
 
-
-                //asign role
-            $role = Role::findById($request->role);
-            $roleName = $role->name;
-            $user->syncRoles($roleName);
-            // dd($user);
+        //asign role
+        $role = Role::findById($request->role);
+        $roleName = $role->name;
+        $user->syncRoles($roleName);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'user updated successfully!');
@@ -160,12 +150,10 @@ class AdminAuthController extends Controller
     {
         $user = User::findOrFail($id);
         if ($user->posts()->count() > 0) {
-        return redirect()->route('admin.users.index')
-            ->with('error', 'Cannot delete user. First delete user releted blog posts.');
+        return redirect()->route('admin.users.index')->with('error', 'Cannot delete user. First delete user releted blog posts.');
         }
         $user->delete();
-        return redirect()->route('admin.users.index')
-            ->with('success', 'user deleted successfully!');
+        return redirect()->route('admin.users.index')->with('success', 'user deleted successfully!');
 
     }
 

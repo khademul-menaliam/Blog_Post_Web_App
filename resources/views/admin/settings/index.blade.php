@@ -1,24 +1,24 @@
 @extends('admin.layouts.app')
 
-    {{-- @include('admin.layouts.partials.sidebar') --}}
-    @section('title', 'Admin Settings')
+{{-- @include('admin.layouts.partials.sidebar') --}}
+@section('title', 'Admin Settings')
 
 @section('content')
 <!-- Content Header (Page header) -->
 <div class="content-header">
-<div class="container-fluid">
-<div class="row mb-2">
-<div class="col-sm-6">
-    <h1 class="m-0">Web Settings</h1>
-</div>
-<div class="col-sm-6">
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item ">Web Settings</li>
-    </ol>
-</div>
-</div>
-</div>
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Web Settings</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item ">Web Settings</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /.content-header -->
 
@@ -147,12 +147,9 @@
                                     @enderror
                                 </div>
                             </div>
-
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="keywords">Keywords</label>
-
                                     <div class="mt-2">
                                         <div id="selectedKeywords" class="form-control" style="min-height: 80px; max-height: 150px; overflow-y: auto; background-color: #f8f9fa;">
                                             @if(old('keywords'))
@@ -188,9 +185,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
-
                             {{-- blog page meta --}}
                         <div class="col-lg-12">
                             <div class="card card-primary">
@@ -209,9 +203,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="blog_keywords">Blog Keywords</label>
@@ -279,8 +270,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="content_keywords">Content Keywords</label>
@@ -330,17 +319,12 @@
                                     @enderror
                                 </div>
                             </div>
-
-
-
-
                         </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
-
     </div>
     <!-- /.card -->
 </div>
