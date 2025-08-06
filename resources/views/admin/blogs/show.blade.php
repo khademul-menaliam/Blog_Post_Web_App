@@ -66,6 +66,9 @@
                         </tr>
 
                             </table>
+                            <div class="mt-3">
+                                <a class="btn btn-info btn-sm" href="{{route('admin.blogs.edit', $post->id)}}">Edit </a>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

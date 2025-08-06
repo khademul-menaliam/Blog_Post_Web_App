@@ -28,7 +28,6 @@
                         <ul>
                             <li>{{$content->description ?? "N/A"}}</li>
                         </ul>
-
                     </div>
                 </div>
             </div>

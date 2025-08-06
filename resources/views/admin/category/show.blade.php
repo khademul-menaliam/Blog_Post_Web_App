@@ -66,8 +66,8 @@
                                 <td style="white-space: nowrap;">{{$post->created_at->format('d/ m/ Y')}}</td>
                             </tr>
 
-                            </table>
-                            <div class="card-header col-ml-0">
+                        </table>
+                            <div class="mt-3">
                                 <a class="btn btn-info btn-sm" href="{{route('admin.category.edit', $post->id)}}">Edit </a>
                             </div>
                         </div>

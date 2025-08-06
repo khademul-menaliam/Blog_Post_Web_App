@@ -8,7 +8,7 @@ class CategoryController extends Controller
 {
 
 
-            public function show($slug)
+public function show($slug)
     {
         $categoryId = Category::where('slug', $slug)->firstOrFail();
         $blogs = Blog::where('status',1)->where('category_id' , $categoryId->id)-> get();
