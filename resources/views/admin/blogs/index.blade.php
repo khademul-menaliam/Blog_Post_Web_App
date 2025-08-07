@@ -86,14 +86,15 @@
                                                <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
                                             @endcan
                                             @can('admin.blog-post.edit')
-                                            <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                                <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
                                             @endcan
                                             @can('admin.blog-post.delete')
-                                            <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                            </form>@endcan
+                                                <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                     @endforeach

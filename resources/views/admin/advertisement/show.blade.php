@@ -58,9 +58,11 @@
                         </tr>
 
                             </table>
+                            @can('admin.advertisement.edit')
                             <div class="mt-3">
                                 <a class="btn btn-info btn-sm" href="{{route('admin.advertisement.edit', $post->id)}}">Edit </a>
                             </div>
+                            @endcan
                         </div>
                         <!-- /.card-body -->
                     </div>

@@ -64,9 +64,11 @@
                                 </tr>
                             </table>
                             @if($admin->role_id==3)
-                                <div class="mt-3">
-                                    <a class="btn btn-info btn-sm" href="{{route('admin.users.edit', $admin->id)}}">Edit </a>
-                                </div>
+                                @can('admin.user.edit')
+                                    <div class="mt-3">
+                                        <a class="btn btn-info btn-sm" href="{{route('admin.users.edit', $admin->id)}}">Edit </a>
+                                    </div>
+                                @endcan
                             @endif
                         </div>
                         <!-- /.card-body -->

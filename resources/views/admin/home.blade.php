@@ -100,30 +100,34 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                    <tbody>
-                        <!-- Demo data rows -->
-                        @foreach($blogs as $post)
-                        <tr>
-                            <td>{{$loop->iteration}}</td>
-                            <td>{{$post->title}}</td>
-                            <td>{{$post->category->title}}</td>
-                            <td>{!! Str::limit($post->description, 80)!!}</td>
-                            <td><img src="{{asset('assets/images/blog/'.$post->img)}}" width="50" height="50" alt="img"></td>
-                            <td>{{ $post->user->name ?? 'N/A' }}</td>
-                            <td>
-                                <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
-                                <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
-
-
-                                <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                                <tbody>
+                                    <!-- Demo data rows -->
+                                    @foreach($blogs as $post)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$post->title}}</td>
+                                        <td>{{$post->category->title}}</td>
+                                        <td>{!! Str::limit($post->description, 80)!!}</td>
+                                        <td><img src="{{asset('assets/images/blog/'.$post->img)}}" width="50" height="50" alt="img"></td>
+                                        <td>{{ $post->user->name ?? 'N/A' }}</td>
+                                        <td>
+                                            @can('admin.blog-post.view')
+                                                <a href="{{route('admin.blogs.show', $post->id)}}" class="btn btn-primary btn-sm m-1">View</a>
+                                            @endcan
+                                            @can('admin.blog-post.edit')
+                                                <a href="{{route('admin.blogs.edit', $post->id)}}" class="btn btn-info btn-sm m-1">Edit</a>
+                                            @endcan
+                                            @can('admin.blog-post.delete')
+                                                <form action="{{ route('admin.blogs.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm m-1" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>ID</th>
@@ -182,13 +186,13 @@
                                         <td>{{$category->slug}}</td>
                                         <td>{{$category->created_at->format('d/ m/ Y')}}</td>
                                     <td>
-                                        <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                        <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm m-1">View</a>
+                                        <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm mb-1">Edit</a>
 
                                         <form action="{{route('admin.category.destroy', $category->id)}}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                            <button class="btn btn-danger btn-sm m-1" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -215,6 +219,88 @@
                         </div>
                      </div>
                   </div>
+
+
+
+                  {{-- Recent crearted users --}}
+                @can('admin.user.edit')
+                <div class="col-lg-12 col-12">
+                    <div class="card">
+                        <div class="card-header border-transparent">
+                        <h3 class="card-title">Latest Created Users & Admins</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        </div>
+                        <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="postlist" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>SL.</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Avatar</th>
+                                        <th>Role</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Demo data rows -->
+                                    @foreach($users as $user)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{$user->email ?? 'N/A' }}</td>
+                                        <td><img src="{{asset('assets/images/users/'.$user->img)}}" width="50" height="50" alt="img"></td>
+                                        {{-- <td>{{$user->role->name ?? 'N/A' }}</td> --}}
+                                        <td>{{ $roles->where('id', $user->role_id)->first()->name ?? 'No Role' }}</td>
+                                        <td>{{ optional($user->created_at)->format('d/m/Y') ?: 'N/A' }}</td>
+                                        <td>
+                                            @can('admin.user.edit')
+                                                <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-info btn-sm m-2">Edit</a>
+                                            @endcan
+                                            @can('admin.user.delete')
+                                                <form action="{{route('admin.users.destroy', $user->id)}}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm m-2" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                                </form>
+                                            @endcan
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>SL.</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Avatar</th>
+                                        <th>Role</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        </div>
+                        <div class="card-footer clearfix">
+                        <a href="{{route('admin.users.index')}}" class="btn btn-sm btn-secondary float-right">View All User</a>
+                        </div>
+                    </div>
+                </div>
+                @endcan
+
+
+
+
                </div>
             </div>
          </div>

@@ -69,9 +69,9 @@
                                             </td>
                                             <td>{{ $role->created_at->format('Y-m-d') }}</td>
                                             <td>
-                                                <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                                <a  href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-info btn-sm">Edit</a>
 
-                                                <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" style="display: inline-block;">
+                                                <form class="mt-2" action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"

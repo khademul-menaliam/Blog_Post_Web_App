@@ -67,14 +67,19 @@
                                     <td>{{$category->slug}}</td>
                                     <td>{{$category->created_at->format('d/ m/ Y')}}</td>
                                     <td>
-                                        <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
-
-                                        <form action="{{route('admin.category.destroy', $category->id)}}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                        </form>
+                                        @can('admin.blog-category.view')
+                                            <a href="{{route('admin.category.show', $category->id)}}" class="btn btn-primary btn-sm">View</a>
+                                        @endcan
+                                        @can('admin.blog-category.edit')
+                                            <a href="{{route('admin.category.edit', $category->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                        @endcan
+                                        @can('admin.blog-category.delete')
+                                            <form action="{{route('admin.category.destroy', $category->id)}}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

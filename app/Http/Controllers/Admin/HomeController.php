@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Blog;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -28,11 +30,13 @@ class HomeController extends Controller
     {
         $categories = Category::latest()->take(5)->get();
         $blogs = Blog::latest()->take(5)->get();
+        $users= User::latest()->take(5)->get();
+        $roles = Role::latest()->get();
         $totalcategories = Category::count();
         $totalblogs = Blog::count();
         $totaldraftblogs = Blog::where('status',0)->count();
         $totalpublishedblogs = Blog::where('status',1)->count();
-        return view('admin.home', compact('categories','blogs', 'totalcategories','totalblogs','totaldraftblogs','totalpublishedblogs'));
+        return view('admin.home', compact('categories','blogs','users','roles', 'totalcategories','totalblogs','totaldraftblogs','totalpublishedblogs'));
     }
 
 }

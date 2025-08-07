@@ -69,12 +69,16 @@
                                     <td>{{ $roles->where('id', $user->role_id)->first()->name ?? 'No Role' }}</td>
                                     <td>{{ optional($user->created_at)->format('d/m/Y') ?: 'N/A' }}</td>
                                     <td>
-                                        <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-info btn-sm">Edit</a>
-                                        <form action="{{route('admin.users.destroy', $user->id)}}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                                        </form>
+                                        @can('admin.user.edit')
+                                            <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-info btn-sm m-2">Edit</a>
+                                        @endcan
+                                        @can('admin.user.delete')
+                                            <form action="{{route('admin.users.destroy', $user->id)}}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm m-2" type="submit" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

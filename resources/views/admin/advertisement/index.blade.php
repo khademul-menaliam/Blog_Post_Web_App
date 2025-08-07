@@ -79,14 +79,22 @@
                                         <td style="white-space: nowrap;">{{$post->created_at->format('d / m / Y') }}</td>
                                         <td>@if ($post->status==0) <span class="text-danger">UnActive</span> @else <span class="text-success">Active</span>@endif </td>
                                         <td>
-                                            <a href="{{route('admin.advertisement.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
-                                            <a href="{{route('admin.advertisement.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
-                                            <form action="{{ route('admin.advertisement.destroy', $post->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                                            </form>
+                                            @can('admin.advertisement.view', $user)
+                                                <a href="{{route('admin.advertisement.show', $post->id)}}" class="btn btn-primary btn-sm">View</a>
+                                            @endcan
+                                            @can('admin.advertisement.edit', $user)
+                                                <a href="{{route('admin.advertisement.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                            @endcan
+                                            @can('admin.advertisement.delete', $user)
+                                                <form action="{{ route('admin.advertisement.destroy', $post->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                                </form>
+                                            @endcan
                                         </td>
+
+
                                     </tr>
                                     @endforeach
                                 </tbody>
