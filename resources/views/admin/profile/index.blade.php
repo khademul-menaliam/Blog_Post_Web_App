@@ -34,38 +34,41 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="postlist" class="table table-bordered table-striped">
-                        <!-- Demo data rows -->
-                        <tr>
-                            <th>Full Name</th>
-                            <td>{{ $admin->name ?? 'N/A' }}</td>
-                        </tr>
-                         <tr>
-                            <th>Email</th>
-                            <td>{{ $admin->email ?? 'N/A' }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-left align-middle">Profile Image </th>
-                            <td><img src="{{asset('assets/images/users/'.$admin->img)}}" width="200" alt="img"></td>
-                        </tr>
-                        <tr>
-                            <th>Role</th>
-                            <td>
-                                {{ $roles->where('id', $admin->role_id)->first()->name ?? 'User' }}
-                            </td>
-                        </tr>
+                                <!-- Demo data rows -->
+                                <tr>
+                                    <th>Full Name</th>
+                                    <td>{{ $admin->name ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ $admin->email ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left align-middle">Profile Image </th>
+                                    <td><img src="{{asset('assets/images/users/'.$admin->img)}}" width="200" alt="img"></td>
+                                </tr>
+                                <tr>
+                                    <th>Role</th>
+                                    <td>
+                                        {{ $roles->where('id', $admin->role_id)->first()->name ?? 'User' }}
+                                    </td>
+                                </tr>
 
-                        <tr>
-                            <th>Registration Date</th>
-                            <td>{{ $admin->created_at ?? 'N/A' }}</td>
-                        </tr>
-                         <tr>
-                            <th>Last Update</th>
-                            <td>{{ $admin->updated_at ?? 'N/A' }}</td>
-                        </tr>
-
+                                <tr>
+                                    <th>Registration Date</th>
+                                    <td>{{ $admin->created_at ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Last Update</th>
+                                    <td>{{ $admin->updated_at ?? 'N/A' }}</td>
+                                </tr>
                             </table>
+                            @if($admin->role_id==3)
+                                <div class="mt-3">
+                                    <a class="btn btn-info btn-sm" href="{{route('admin.users.edit', $admin->id)}}">Edit </a>
+                                </div>
+                            @endif
                         </div>
-
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->

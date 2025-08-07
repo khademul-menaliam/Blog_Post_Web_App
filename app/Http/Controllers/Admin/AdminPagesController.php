@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Contact;
+use App\Models\Blog;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -69,9 +71,5 @@ class AdminPagesController extends Controller
         $post = DB::table('disclaimer')->first();
         return view('admin.pages.disclaimer', compact('post'));
     }
-
-
-
-
 
 }

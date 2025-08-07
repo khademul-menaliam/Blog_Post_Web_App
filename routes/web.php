@@ -46,16 +46,13 @@ Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy.index
 Route::get('/terms', [TermsController::class, 'index'])->name('terms.index');
 Route::get('/about', [PagesController::class, 'about'])->name('about.us.index');
 Route::get('/disclaimer', [PagesController::class, 'disclaimer'])->name('disclaimer.index');
-Route::get('/siteMap', [PagesController::class, 'siteMap'])->name('siteMap.index');
-Route::get('/siteMapXML', [PagesController::class, 'xmlSiteMap'])->name('siteMap.xml');
 Route::get('/advertisement/clicks/{slug}', [PagesController::class, 'clickCount'])->name('advertisement.clicks');
-
-
-
-
 Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::post('/savecontact', [ContactController::class, 'store'])->name('savecontact');
 
+// Site map
+Route::get('/siteMap', [PagesController::class, 'siteMap'])->name('siteMap.index');
+Route::get('/siteMapXML', [PagesController::class, 'xmlSiteMap'])->name('siteMap.xml');
 
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -68,8 +65,8 @@ Route::post('/admin/users/store', [AdminAuthController::class, 'store'])->name('
 Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name('admin.users.edit');
 Route::put('/admin/users/update/{id}', [AdminAuthController::class, 'update'])->name('admin.users.update');
 Route::delete('/admin/users/delete/{id}', [AdminAuthController::class, 'destroy'])->name('admin.users.destroy');
-
-Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
+// Admin profile view
+Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile');
 // Route::get('/admin/users/edit/{id}', [AdminAuthController::class, 'edit'])->name('admin.profile.update');
 
 
