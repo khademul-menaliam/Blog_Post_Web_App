@@ -210,7 +210,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
     <script src="https://unpkg.com/@ckeditor/ckeditor5-inspector@4.1.0/build/inspector.js"></script>
 
-        <script>
+    <script>
         $(function () {
             let table = new DataTable('#postlist');
         });
