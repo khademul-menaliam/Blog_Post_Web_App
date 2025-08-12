@@ -31,8 +31,18 @@ use App\Http\Controllers\Admin\AdminPagesController;
 use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AdminProfileController;
 
+use App\Http\Controllers\Api\PostController;
 
+//api routes
+Route::get('/posts', [PostController::class, 'index']);
+// Route::get('/posts', function () {
+//     return response()->json([
+//         ['id' => 1, 'title' => 'Test Post', 'body' => 'Hello world!'],
+//         ['id' => 2, 'title' => 'Another Post', 'body' => 'Blog content here...']
+//     ]);
+// });
 
+//website routes
 Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
