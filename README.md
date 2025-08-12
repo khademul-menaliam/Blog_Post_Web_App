@@ -130,6 +130,8 @@ Want to help improve this project? Great! You can:
 
 We welcome any contributions!
 
-## License
 
-This project is licensed under the MIT License.
+## Author
+
+Developed by **Khadimul Islam**  
+GitHub: [khademul-menaliam](https://github.com/khademul-menaliam)
